@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Brimz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #080810;
+      --surface:  #0f0f1a;
+      --border:   #1a1a2e;
+      --teal:     #1CF4EA;
+      --teal-dim: rgba(28,244,234,0.08);
+      --gold:     #FFB612;
+      --text:     #f0f0f0;
+      --text2:    #9ca3af;
+      --text3:    #4b5563;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── Top bar ── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8,8,16,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      background: var(--teal);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--bg);
+      flex-shrink: 0;
+    }
+    .logo-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--text);
+      letter-spacing: 2px;
+    }
+    .legal-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--text3);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ── Layout ── */
+    .page-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 32px 100px;
+    }
+
+    /* ── Header ── */
+    .doc-header {
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .doc-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--teal);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .doc-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: clamp(36px, 6vw, 52px);
+      line-height: 1.05;
+      color: var(--text);
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+    }
+    .doc-meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .doc-meta-item {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--text3);
+    }
+    .doc-meta-item span {
+      color: var(--text2);
+    }
+
+    /* ── Table of contents ── */
+    .toc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin-bottom: 48px;
+    }
+    .toc-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--text3);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .toc ol {
+      list-style: none;
+      counter-reset: toc;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 32px;
+    }
+    @media (max-width: 560px) { .toc ol { grid-template-columns: 1fr; } }
+    .toc li {
+      counter-increment: toc;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .toc li::before {
+      content: counter(toc, decimal-leading-zero);
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--teal);
+      flex-shrink: 0;
+    }
+    .toc a {
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.15s;
+    }
+    .toc a:hover { color: var(--teal); }
+
+    /* ── Sections ── */
+    .section {
+      margin-bottom: 52px;
+    }
+    .section-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--teal);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 26px;
+      color: var(--text);
+      letter-spacing: 0.3px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    h3 {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--text);
+      margin: 24px 0 10px;
+    }
+    p {
+      color: var(--text2);
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    p:last-child { margin-bottom: 0; }
+
+    ul, ol {
+      color: var(--text2);
+      font-size: 15px;
+      line-height: 1.8;
+      padding-left: 24px;
+      margin-bottom: 16px;
+    }
+    li { margin-bottom: 6px; }
+
+    /* ── Callout boxes ── */
+    .callout {
+      background: var(--teal-dim);
+      border-left: 3px solid var(--teal);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .callout p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .callout strong { color: var(--teal); }
+
+    .disclaimer {
+      background: rgba(255,182,18,0.06);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .disclaimer p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    /* ── Data table ── */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+    .data-table th {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      color: var(--text3);
+      text-transform: uppercase;
+      text-align: left;
+      padding: 10px 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table td {
+      padding: 12px 16px;
+      color: var(--text2);
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table td:first-child { color: var(--text); font-weight: 500; }
+
+    /* ── Contact block ── */
+    .contact-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin-top: 16px;
+    }
+    .contact-block p { margin-bottom: 8px; }
+    .contact-block a {
+      color: var(--teal);
+      text-decoration: none;
+    }
+    .contact-block a:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    .doc-footer {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .doc-footer-left {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--text3);
+    }
+    .doc-footer-links {
+      display: flex;
+      gap: 20px;
+    }
+    .doc-footer-links a {
+      font-size: 13px;
+      color: var(--text3);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .doc-footer-links a:hover { color: var(--teal); }
+
+    a { color: var(--teal); }
+
+    @media (max-width: 600px) {
+      .page-wrap { padding: 40px 20px 80px; }
+      .topbar { padding: 14px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <nav class="topbar">
+    <a href="https://brimz.tech" class="logo">
+      <div class="logo-mark">B</div>
+      <span class="logo-text">BRIMZ</span>
+    </a>
+    <span class="legal-badge">Legal</span>
+  </nav>
+
+  <div class="page-wrap">
+
+    <!-- Header -->
+    <div class="doc-header">
+      <div class="doc-label">Legal Document</div>
+      <h1 class="doc-title">Privacy Policy</h1>
+      <div class="doc-meta">
+        <div class="doc-meta-item">Version <span>1.0</span></div>
+        <div class="doc-meta-item">Effective <span>March 2026</span></div>
+        <div class="doc-meta-item">Last Updated <span>March 2026</span></div>
+      </div>
+    </div>
+
+    <!-- TOC -->
+    <div class="toc">
+      <div class="toc-title">Contents</div>
+      <ol>
+        <li><a href="#s1">Who We Are</a></li>
+        <li><a href="#s2">Data We Collect</a></li>
+        <li><a href="#s3">How We Use Your Data</a></li>
+        <li><a href="#s4">Engagement Signals</a></li>
+        <li><a href="#s5">Third-Party Sharing</a></li>
+        <li><a href="#s6">Partner API Access</a></li>
+        <li><a href="#s7">Data Retention</a></li>
+        <li><a href="#s8">Your Rights</a></li>
+        <li><a href="#s9">Data Deletion</a></li>
+        <li><a href="#s10">Children's Privacy</a></li>
+        <li><a href="#s11">Security</a></li>
+        <li><a href="#s12">Changes to This Policy</a></li>
+        <li><a href="#s13">Contact</a></li>
+      </ol>
+    </div>
+
+    <div class="disclaimer">
+      <p><strong>Not a medical device.</strong> Brimz does not diagnose, treat, cure, or prevent any medical condition. Data collected by the Brimz wristband is used exclusively for fan engagement measurement at live events.</p>
+    </div>
+
+    <!-- Section 1 -->
+    <div class="section" id="s1">
+      <div class="section-num">01</div>
+      <h2>Who We Are</h2>
+      <p>Brimz ("Brimz," "we," "our," or "us") operates a fan engagement platform used at live sports and entertainment events. The Brimz platform includes a mobile app (iOS and Android), a smart wristband worn at events, and web-based dashboards used by venue operators.</p>
+      <p>This Privacy Policy explains how we collect, use, store, and share information when you use the Brimz mobile app or wristband. It applies to all fans who download and use the Brimz app.</p>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="section" id="s2">
+      <div class="section-num">02</div>
+      <h2>Data We Collect</h2>
+
+      <h3>Account Information</h3>
+      <p>When you create a Brimz account, we collect:</p>
+      <ul>
+        <li>Email address</li>
+        <li>Display name</li>
+        <li>Username (optional)</li>
+        <li>Profile photo (optional)</li>
+      </ul>
+
+      <h3>Engagement Signal Data</h3>
+      <p>When you wear the Brimz wristband at an event, we collect:</p>
+      <ul>
+        <li><strong>Motion data</strong> — physical movement, detected via accelerometer (MPU6050)</li>
+        <li><strong>Audio response</strong> — crowd sound level near the wristband, used to measure cheer response</li>
+        <li><strong>Heart rate</strong> — beats per minute, measured via optical sensor (MAX30102)</li>
+      </ul>
+      <div class="callout">
+        <p><strong>Important:</strong> These signals are collected exclusively to calculate your Fan Energy Score during the event. They are engagement measurements — not health or medical data. Heart rate is stored as elevation above your personal baseline established at pairing, not as an absolute medical measurement.</p>
+      </div>
+
+      <h3>Usage Data</h3>
+      <ul>
+        <li>Event attendance history</li>
+        <li>Challenges completed</li>
+        <li>Rewards earned and redeemed</li>
+        <li>Badges unlocked</li>
+        <li>In-app interactions and screen views</li>
+      </ul>
+
+      <h3>Device & Technical Data</h3>
+      <ul>
+        <li>Device identifiers</li>
+        <li>Bluetooth identifiers (for wristband pairing)</li>
+        <li>Operating system and app version</li>
+        <li>Push notification token (if you enable notifications)</li>
+      </ul>
+
+      <h3>Location Data</h3>
+      <p>We do not collect precise GPS location. We may infer a general venue location from the event you are attending.</p>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="section" id="s3">
+      <div class="section-num">03</div>
+      <h2>How We Use Your Data</h2>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Purpose</th>
+            <th>Data Used</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Calculate your Fan Energy Score</td>
+            <td>Motion, audio response, heart rate elevation</td>
+          </tr>
+          <tr>
+            <td>Determine badge eligibility</td>
+            <td>Energy score, challenge completions, attendance history</td>
+          </tr>
+          <tr>
+            <td>Manage your rewards wallet</td>
+            <td>Energy score, token balance, redemption history</td>
+          </tr>
+          <tr>
+            <td>Show your leaderboard ranking</td>
+            <td>Energy score, display name, username</td>
+          </tr>
+          <tr>
+            <td>Sync the LED light show</td>
+            <td>Wristband Bluetooth connection</td>
+          </tr>
+          <tr>
+            <td>Send push notifications</td>
+            <td>Push notification token (if enabled)</td>
+          </tr>
+          <tr>
+            <td>Improve the platform</td>
+            <td>Aggregated, anonymized usage analytics</td>
+          </tr>
+          <tr>
+            <td>Provide customer support</td>
+            <td>Account information, session data</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>We do not use your data for advertising, targeted marketing, or sale to third parties.</p>
+    </div>
+
+    <!-- Section 4 -->
+    <div class="section" id="s4">
+      <div class="section-num">04</div>
+      <h2>Engagement Signals &amp; Biometric Data</h2>
+      <p>The Brimz wristband collects motion, audio, and heart rate signals. We take the following precautions with this data:</p>
+      <ul>
+        <li>All signal data is transmitted over HTTPS/TLS — never in plain text</li>
+        <li>Data is encrypted at rest on our servers</li>
+        <li>Heart rate is stored as elevation above your personal baseline — your resting heart rate is not retained after your session ends</li>
+        <li>Raw sensor data is never shared with third parties</li>
+        <li>Signal data is not used for health screening, insurance, or employment purposes</li>
+        <li>Signal data is not integrated with Apple HealthKit, Google Health Connect, or any health platform</li>
+        <li>Your explicit consent is required before any signal collection begins</li>
+      </ul>
+
+      <div class="callout">
+        <p><strong>You are in control.</strong> You can withdraw your consent to biometric and audio data collection at any time from the Settings screen in the app. Withdrawal stops all future collection but does not affect data already collected unless you request deletion.</p>
+      </div>
+    </div>
+
+    <!-- Section 5 -->
+    <div class="section" id="s5">
+      <div class="section-num">05</div>
+      <h2>Third-Party Sharing</h2>
+
+      <h3>Venue Operators</h3>
+      <p>The venue hosting your event can see aggregated crowd energy data and participation metrics. Venue operators cannot see your individual biometric readings — only your Fan Energy Score, ranking position, and challenge participation status.</p>
+
+      <h3>Service Providers</h3>
+      <p>We use the following third-party services to operate the platform:</p>
+      <ul>
+        <li><strong>Supabase</strong> — database, authentication, and backend infrastructure</li>
+        <li><strong>Expo / EAS</strong> — mobile app build and update delivery</li>
+        <li><strong>Apple APNs / Google FCM</strong> — push notification delivery (if you enable notifications)</li>
+      </ul>
+      <p>These providers access your data only as necessary to provide their services to us, under data processing agreements consistent with this policy.</p>
+
+      <h3>What We Never Do</h3>
+      <ul>
+        <li>Sell your personal data to any third party</li>
+        <li>Share raw biometric/sensor readings outside of Brimz infrastructure</li>
+        <li>Use your data for targeted advertising</li>
+        <li>Share data with employers, insurers, or government entities (except as required by law)</li>
+      </ul>
+    </div>
+
+    <!-- Section 6 -->
+    <div class="section" id="s6">
+      <div class="section-num">06</div>
+      <h2>Partner API Access</h2>
+      <p>Sports teams and venue partners may connect to the Brimz platform via our API to display fan engagement data within their own apps or in-arena experiences.</p>
+      <p><strong>Your data is never shared with a partner without your explicit consent.</strong> Before any partner can access your data:</p>
+      <ul>
+        <li>You will be shown a consent screen explaining exactly what data the partner will receive and why</li>
+        <li>You can grant access to one partner without granting access to all partners</li>
+        <li>Partners only receive the specific data scopes you approve</li>
+        <li>You can revoke a partner's access at any time from Settings → Privacy &amp; Data</li>
+      </ul>
+      <p>All partners must sign a Partner Agreement committing to data protection standards equivalent to our own before receiving API access. Partners cannot re-share or sell your data.</p>
+      <p>Every partner data access request is logged in our audit system with a timestamp, the data accessed, and the partner's identity.</p>
+    </div>
+
+    <!-- Section 7 -->
+    <div class="section" id="s7">
+      <div class="section-num">07</div>
+      <h2>Data Retention</h2>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Data Type</th>
+            <th>Retention Period</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Account information</td>
+            <td>Until you delete your account</td>
+          </tr>
+          <tr>
+            <td>Event attendance history</td>
+            <td>Until you delete your account</td>
+          </tr>
+          <tr>
+            <td>Raw sensor ticks (score_ticks)</td>
+            <td>90 days after the event, then archived or deleted</td>
+          </tr>
+          <tr>
+            <td>Fan Energy Score (aggregated)</td>
+            <td>Until you delete your account</td>
+          </tr>
+          <tr>
+            <td>Earned badges and rewards</td>
+            <td>Until you delete your account</td>
+          </tr>
+          <tr>
+            <td>Voucher codes</td>
+            <td>15 minutes from issuance (single use)</td>
+          </tr>
+          <tr>
+            <td>Partner API audit logs</td>
+            <td>Minimum 12 months for compliance</td>
+          </tr>
+          <tr>
+            <td>Deletion request records</td>
+            <td>90 days after processing for compliance verification</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section 8 -->
+    <div class="section" id="s8">
+      <div class="section-num">08</div>
+      <h2>Your Rights</h2>
+      <p>Depending on where you are located, you may have the following rights regarding your personal data:</p>
+      <ul>
+        <li><strong>Access</strong> — Request a copy of the personal data we hold about you</li>
+        <li><strong>Correction</strong> — Request correction of inaccurate data</li>
+        <li><strong>Deletion</strong> — Request deletion of your account and all associated data</li>
+        <li><strong>Portability</strong> — Request your data in a machine-readable format</li>
+        <li><strong>Withdraw Consent</strong> — Withdraw consent to biometric/audio collection at any time</li>
+        <li><strong>Revoke Partner Access</strong> — Revoke any partner's access to your data at any time</li>
+        <li><strong>Opt Out of Notifications</strong> — Disable push notifications at any time in Settings</li>
+      </ul>
+      <p>To exercise any of these rights, contact us at <a href="mailto:privacy@brimz.tech">privacy@brimz.tech</a> or use the in-app controls in Settings → Privacy &amp; Data.</p>
+    </div>
+
+    <!-- Section 9 -->
+    <div class="section" id="s9">
+      <div class="section-num">09</div>
+      <h2>Data Deletion</h2>
+      <p>You can delete your Brimz account and all associated data at any time:</p>
+      <ul>
+        <li><strong>In the app:</strong> Settings → Privacy &amp; Data → Delete My Data</li>
+        <li><strong>Online form:</strong> <a href="https://brimz.tech/delete">brimz.tech/delete</a> — available even if you have uninstalled the app</li>
+        <li><strong>By email:</strong> <a href="mailto:privacy@brimz.tech">privacy@brimz.tech</a></li>
+      </ul>
+      <p>Deletion removes your account record, engagement history, earned badges, token balance, and all associated session data. Some data may be retained for up to 30 days in backup systems before permanent removal. API audit logs are retained for a minimum of 12 months for compliance purposes, with your personal identifiers anonymized.</p>
+
+      <div class="callout">
+        <p><strong>Note:</strong> Deletion is permanent and cannot be undone. Your earned badges, event history, and token balance cannot be recovered after deletion.</p>
+      </div>
+    </div>
+
+    <!-- Section 10 -->
+    <div class="section" id="s10">
+      <div class="section-num">10</div>
+      <h2>Children's Privacy</h2>
+      <p>The Brimz app is not directed to children under the age of 13. We do not knowingly collect personal data from children under 13. If you believe a child under 13 has provided us with personal data, please contact us at <a href="mailto:privacy@brimz.tech">privacy@brimz.tech</a> and we will delete the information promptly.</p>
+      <p>Users between the ages of 13 and 17 should have a parent or guardian review this Privacy Policy. Biometric data collection from users under 18 requires verifiable parental consent where required by applicable law.</p>
+    </div>
+
+    <!-- Section 11 -->
+    <div class="section" id="s11">
+      <div class="section-num">11</div>
+      <h2>Security</h2>
+      <p>We implement industry-standard security measures to protect your data:</p>
+      <ul>
+        <li>All data transmission uses HTTPS/TLS encryption</li>
+        <li>Data is encrypted at rest in our database</li>
+        <li>Authentication tokens are stored securely using platform Keychain (iOS) and Keystore (Android)</li>
+        <li>Row-level security policies ensure fans can only access their own data</li>
+        <li>Partner API keys are stored as cryptographic hashes — plain-text keys are never stored</li>
+        <li>Voucher codes are generated server-side and expire after 15 minutes</li>
+        <li>Access to production data is limited to authorized Brimz personnel</li>
+      </ul>
+      <p>No security system is impenetrable. If you discover a vulnerability, please report it to <a href="mailto:security@brimz.tech">security@brimz.tech</a>.</p>
+    </div>
+
+    <!-- Section 12 -->
+    <div class="section" id="s12">
+      <div class="section-num">12</div>
+      <h2>Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. When we make material changes, we will:</p>
+      <ul>
+        <li>Update the "Last Updated" date at the top of this page</li>
+        <li>Notify you via push notification or email if you have an account</li>
+        <li>For significant changes involving new data collection, request your renewed consent within the app</li>
+      </ul>
+      <p>Continued use of the Brimz app after a policy update constitutes acceptance of the updated terms.</p>
+    </div>
+
+    <!-- Section 13 -->
+    <div class="section" id="s13">
+      <div class="section-num">13</div>
+      <h2>Contact Us</h2>
+      <p>For any questions, concerns, or requests regarding this Privacy Policy or your personal data:</p>
+      <div class="contact-block">
+        <p><strong>Brimz Privacy</strong></p>
+        <p>Email: <a href="mailto:privacy@brimz.tech">privacy@brimz.tech</a></p>
+        <p>Website: <a href="https://brimz.tech">brimz.tech</a></p>
+        <p>Data Deletion: <a href="https://brimz.tech/delete">brimz.tech/delete</a></p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="doc-footer">
+      <div class="doc-footer-left">© 2026 Brimz · All rights reserved</div>
+      <div class="doc-footer-links">
+        <a href="/terms">Terms of Service</a>
+        <a href="/delete">Delete My Data</a>
+        <a href="https://brimz.tech">Back to Brimz</a>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — Brimz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #080810;
+      --surface:  #0f0f1a;
+      --border:   #1a1a2e;
+      --teal:     #1CF4EA;
+      --teal-dim: rgba(28,244,234,0.08);
+      --gold:     #FFB612;
+      --text:     #f0f0f0;
+      --text2:    #9ca3af;
+      --text3:    #4b5563;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,8,16,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-mark {
+      width: 32px; height: 32px; background: var(--teal); border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 18px; color: var(--bg);
+    }
+    .logo-text { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20px; color: var(--text); letter-spacing: 2px; }
+    .legal-badge { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 1px; text-transform: uppercase; }
+
+    .page-wrap { max-width: 800px; margin: 0 auto; padding: 60px 32px 100px; }
+
+    .doc-header { padding-bottom: 40px; border-bottom: 1px solid var(--border); margin-bottom: 48px; }
+    .doc-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 16px; }
+    .doc-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: clamp(36px, 6vw, 52px); line-height: 1.05; color: var(--text); letter-spacing: -0.5px; margin-bottom: 20px; }
+    .doc-meta { display: flex; gap: 24px; flex-wrap: wrap; }
+    .doc-meta-item { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text3); }
+    .doc-meta-item span { color: var(--text2); }
+
+    .toc { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 28px 32px; margin-bottom: 48px; }
+    .toc-title { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--text3); text-transform: uppercase; margin-bottom: 16px; }
+    .toc ol { list-style: none; counter-reset: toc; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 32px; }
+    @media (max-width: 560px) { .toc ol { grid-template-columns: 1fr; } }
+    .toc li { counter-increment: toc; display: flex; align-items: baseline; gap: 8px; }
+    .toc li::before { content: counter(toc, decimal-leading-zero); font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold); flex-shrink: 0; }
+    .toc a { color: var(--text2); text-decoration: none; font-size: 14px; transition: color 0.15s; }
+    .toc a:hover { color: var(--gold); }
+
+    .section { margin-bottom: 52px; }
+    .section-num { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; }
+    h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 26px; color: var(--text); letter-spacing: 0.3px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    h3 { font-family: 'Barlow', sans-serif; font-weight: 600; font-size: 16px; color: var(--text); margin: 24px 0 10px; }
+    p { color: var(--text2); font-size: 15px; line-height: 1.8; margin-bottom: 16px; }
+    p:last-child { margin-bottom: 0; }
+    ul, ol { color: var(--text2); font-size: 15px; line-height: 1.8; padding-left: 24px; margin-bottom: 16px; }
+    li { margin-bottom: 6px; }
+
+    .callout {
+      background: var(--teal-dim);
+      border-left: 3px solid var(--teal);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .callout p { margin: 0; font-size: 14px; color: var(--text); }
+    .callout strong { color: var(--teal); }
+
+    .highlight-box {
+      background: rgba(255,182,18,0.06);
+      border: 1px solid rgba(255,182,18,0.15);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+    .highlight-box p { margin: 0; font-size: 14px; color: var(--text); }
+
+    a { color: var(--teal); }
+
+    .contact-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin-top: 16px;
+    }
+    .contact-block p { margin-bottom: 8px; }
+    .contact-block a { color: var(--teal); text-decoration: none; }
+    .contact-block a:hover { text-decoration: underline; }
+
+    .doc-footer {
+      margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+    }
+    .doc-footer-left { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); }
+    .doc-footer-links { display: flex; gap: 20px; }
+    .doc-footer-links a { font-size: 13px; color: var(--text3); text-decoration: none; transition: color 0.15s; }
+    .doc-footer-links a:hover { color: var(--teal); }
+
+    @media (max-width: 600px) {
+      .page-wrap { padding: 40px 20px 80px; }
+      .topbar { padding: 14px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="topbar">
+    <a href="https://brimz.tech" class="logo">
+      <div class="logo-mark">B</div>
+      <span class="logo-text">BRIMZ</span>
+    </a>
+    <span class="legal-badge">Legal</span>
+  </nav>
+
+  <div class="page-wrap">
+
+    <div class="doc-header">
+      <div class="doc-label">Legal Document</div>
+      <h1 class="doc-title">Terms of Service</h1>
+      <div class="doc-meta">
+        <div class="doc-meta-item">Version <span>1.0</span></div>
+        <div class="doc-meta-item">Effective <span>March 2026</span></div>
+        <div class="doc-meta-item">Last Updated <span>March 2026</span></div>
+      </div>
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">Contents</div>
+      <ol>
+        <li><a href="#s1">Acceptance of Terms</a></li>
+        <li><a href="#s2">Description of Service</a></li>
+        <li><a href="#s3">Eligibility</a></li>
+        <li><a href="#s4">Your Account</a></li>
+        <li><a href="#s5">The Wristband</a></li>
+        <li><a href="#s6">Fan Energy Score &amp; Rewards</a></li>
+        <li><a href="#s7">Acceptable Use</a></li>
+        <li><a href="#s8">Intellectual Property</a></li>
+        <li><a href="#s9">Privacy &amp; Data</a></li>
+        <li><a href="#s10">Disclaimers</a></li>
+        <li><a href="#s11">Limitation of Liability</a></li>
+        <li><a href="#s12">Indemnification</a></li>
+        <li><a href="#s13">Termination</a></li>
+        <li><a href="#s14">Governing Law</a></li>
+        <li><a href="#s15">Changes to Terms</a></li>
+        <li><a href="#s16">Contact</a></li>
+      </ol>
+    </div>
+
+    <div class="highlight-box">
+      <p><strong>Summary:</strong> These Terms govern your use of the Brimz fan engagement app and wristband. By using Brimz, you agree to these Terms. Key points: you must be 13+ to use the service, the wristband is venue property and must be returned, earned rewards have no cash value, and we are not a medical device.</p>
+    </div>
+
+    <div class="section" id="s1">
+      <div class="section-num">01</div>
+      <h2>Acceptance of Terms</h2>
+      <p>By downloading, installing, or using the Brimz mobile application ("App") or the Brimz wristband ("Device"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use the App or Device.</p>
+      <p>These Terms form a binding legal agreement between you and Brimz ("Brimz," "we," "our," or "us"). By creating an account or using the App as a guest, you represent that you have read, understood, and agreed to these Terms.</p>
+    </div>
+
+    <div class="section" id="s2">
+      <div class="section-num">02</div>
+      <h2>Description of Service</h2>
+      <p>Brimz is a fan engagement platform used at live sports and entertainment events. The platform includes:</p>
+      <ul>
+        <li>The Brimz mobile app (iOS and Android)</li>
+        <li>The Brimz smart wristband, which collects engagement signals during events</li>
+        <li>A Fan Energy Score system that measures crowd engagement</li>
+        <li>Challenges, rewards, and a leaderboard system operated by venue partners</li>
+        <li>An LED light synchronization experience</li>
+      </ul>
+      <p>Brimz is a B2B platform licensed to venues. The specific challenges, rewards, and content available at any event are determined and operated by the venue, not by Brimz directly.</p>
+    </div>
+
+    <div class="section" id="s3">
+      <div class="section-num">03</div>
+      <h2>Eligibility</h2>
+      <p>You must be at least 13 years of age to create a Brimz account or use the App. If you are between 13 and 17, you represent that you have your parent or guardian's permission to use the App and that they have reviewed and agreed to these Terms on your behalf.</p>
+      <p>Collection of biometric or engagement signal data from users under 13 is strictly prohibited. If we discover that a user under 13 has provided personal data, we will delete that information immediately.</p>
+    </div>
+
+    <div class="section" id="s4">
+      <div class="section-num">04</div>
+      <h2>Your Account</h2>
+      <h3>Creating an Account</h3>
+      <p>You may use the App without an account (guest mode), but certain features — including leaderboard participation, reward redemption, and carrying your history across events — require a registered account.</p>
+      <p>You are responsible for maintaining the confidentiality of your login credentials. You agree to notify us immediately at <a href="mailto:support@brimz.tech">support@brimz.tech</a> if you suspect unauthorized access to your account.</p>
+
+      <h3>Accuracy of Information</h3>
+      <p>You agree to provide accurate, current, and complete information when creating your account. Impersonating another person or providing false information is grounds for immediate account termination.</p>
+
+      <h3>Account Security</h3>
+      <p>You are solely responsible for all activity that occurs under your account. Brimz is not liable for any loss or damage resulting from your failure to protect your account credentials.</p>
+    </div>
+
+    <div class="section" id="s5">
+      <div class="section-num">05</div>
+      <h2>The Wristband</h2>
+      <h3>Venue Property</h3>
+      <p>The Brimz wristband is the property of the venue hosting the event. By accepting a wristband, you agree to:</p>
+      <ul>
+        <li>Return the wristband at the end of the event at the designated return point</li>
+        <li>Not remove, tamper with, or damage the wristband's sensors, NFC chip, or LED components</li>
+        <li>Not attempt to circumvent the wristband's hardware or firmware</li>
+        <li>Use the wristband only for its intended purpose — fan engagement at the event</li>
+      </ul>
+      <p>Failure to return the wristband or intentional damage may result in a replacement charge assessed by the venue.</p>
+
+      <h3>Hardware Limitations</h3>
+      <p>Wristband availability is subject to inventory at each venue. Sensor features require a compatible smartphone with Bluetooth and NFC capability. Some older devices may not support all features.</p>
+
+      <div class="callout">
+        <p><strong>Not a medical device.</strong> The Brimz wristband is an entertainment device used to measure crowd engagement. It is not a medical device and does not provide medically accurate measurements. Do not use Brimz data to make any health or medical decisions.</p>
+      </div>
+    </div>
+
+    <div class="section" id="s6">
+      <div class="section-num">06</div>
+      <h2>Fan Energy Score &amp; Rewards</h2>
+      <h3>Fan Energy Score</h3>
+      <p>Your Fan Energy Score is calculated based on engagement signals collected by the wristband during an event. The scoring algorithm is proprietary and may vary by venue. Scores are for entertainment purposes and do not represent any objective measurement.</p>
+
+      <h3>Tokens and Rewards</h3>
+      <ul>
+        <li>Tokens and rewards have no cash value and cannot be exchanged for cash or cash equivalents</li>
+        <li>Tokens and rewards are non-transferable between accounts</li>
+        <li>Reward availability is determined by the venue and may change at any time</li>
+        <li>Voucher codes expire 15 minutes after issuance and are single-use</li>
+        <li>Expired or unused vouchers cannot be reissued</li>
+        <li>Brimz and venues reserve the right to modify the rewards catalog at any time</li>
+      </ul>
+
+      <h3>Badges</h3>
+      <p>Badges are digital achievements that reflect your participation history. They have no monetary value and are non-transferable. Brimz reserves the right to modify badge criteria or retire badges at any time.</p>
+
+      <h3>Leaderboards</h3>
+      <p>Leaderboard rankings are publicly visible to other Brimz users. By participating in the leaderboard, you consent to your display name and score being visible to other fans. You can use a pseudonymous username to protect your identity.</p>
+    </div>
+
+    <div class="section" id="s7">
+      <div class="section-num">07</div>
+      <h2>Acceptable Use</h2>
+      <p>You agree not to:</p>
+      <ul>
+        <li>Use the App or wristband to cheat, manipulate, or artificially inflate your Fan Energy Score</li>
+        <li>Interfere with other fans' use of the platform</li>
+        <li>Attempt to reverse-engineer, decompile, or tamper with the App or wristband hardware</li>
+        <li>Use the platform to harass, abuse, or threaten other users</li>
+        <li>Create multiple accounts to circumvent suspensions or limitations</li>
+        <li>Use automated tools, bots, or scripts to interact with the App</li>
+        <li>Attempt to access another user's account</li>
+        <li>Use the App in any manner that violates applicable laws or regulations</li>
+      </ul>
+      <p>Violation of these rules may result in immediate account suspension or permanent ban, at Brimz's sole discretion.</p>
+    </div>
+
+    <div class="section" id="s8">
+      <div class="section-num">08</div>
+      <h2>Intellectual Property</h2>
+      <p>All content, features, and functionality of the Brimz App and platform — including but not limited to software, text, graphics, logos, icons, and the Fan Energy Score algorithm — are owned by Brimz or its licensors and are protected by copyright, trademark, and other intellectual property laws.</p>
+      <p>You are granted a limited, non-exclusive, non-transferable license to use the App for personal, non-commercial purposes in accordance with these Terms. You may not copy, modify, distribute, sell, or create derivative works from any part of the Brimz platform.</p>
+    </div>
+
+    <div class="section" id="s9">
+      <div class="section-num">09</div>
+      <h2>Privacy &amp; Data</h2>
+      <p>Your use of Brimz is governed by our <a href="/privacy">Privacy Policy</a>, which is incorporated into these Terms by reference. By using Brimz, you consent to our collection and use of your data as described in the Privacy Policy.</p>
+      <p>You retain the right to access, correct, and delete your personal data at any time. See our <a href="/privacy#s8">Privacy Policy — Your Rights</a> for details.</p>
+    </div>
+
+    <div class="section" id="s10">
+      <div class="section-num">10</div>
+      <h2>Disclaimers</h2>
+      <p>THE BRIMZ APP AND WRISTBAND ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED.</p>
+      <p>Brimz does not warrant that:</p>
+      <ul>
+        <li>The App or wristband will be error-free or uninterrupted</li>
+        <li>Fan Energy Scores will be accurate, complete, or reliable</li>
+        <li>The platform will be available at any specific time or location</li>
+        <li>Defects will be corrected</li>
+      </ul>
+      <p>THE BRIMZ WRISTBAND IS NOT A MEDICAL DEVICE. IT DOES NOT DIAGNOSE, TREAT, CURE, OR PREVENT ANY MEDICAL CONDITION. DO NOT RELY ON BRIMZ DATA FOR ANY HEALTH OR MEDICAL PURPOSE.</p>
+    </div>
+
+    <div class="section" id="s11">
+      <div class="section-num">11</div>
+      <h2>Limitation of Liability</h2>
+      <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, BRIMZ SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, GOODWILL, OR OTHER INTANGIBLE LOSSES, ARISING OUT OF OR IN CONNECTION WITH:</p>
+      <ul>
+        <li>Your use or inability to use the App or wristband</li>
+        <li>Any inaccuracy in the Fan Energy Score</li>
+        <li>Loss or expiration of tokens, rewards, or badges</li>
+        <li>Any interruption or cessation of the platform</li>
+        <li>Any unauthorized access to your account</li>
+      </ul>
+      <p>Brimz's total liability to you for any claims arising under these Terms shall not exceed the greater of $100 USD or the amount you paid to Brimz in the 12 months preceding the claim (which, given the App is free, is zero).</p>
+    </div>
+
+    <div class="section" id="s12">
+      <div class="section-num">12</div>
+      <h2>Indemnification</h2>
+      <p>You agree to indemnify, defend, and hold harmless Brimz, its officers, directors, employees, and agents from any claims, liabilities, damages, losses, and expenses (including reasonable legal fees) arising out of or in any way connected with:</p>
+      <ul>
+        <li>Your violation of these Terms</li>
+        <li>Your use of the App or wristband in a manner not authorized by these Terms</li>
+        <li>Your violation of any applicable law or the rights of any third party</li>
+      </ul>
+    </div>
+
+    <div class="section" id="s13">
+      <div class="section-num">13</div>
+      <h2>Termination</h2>
+      <p>Brimz may suspend or terminate your account at any time, with or without notice, for conduct that violates these Terms or is otherwise harmful to the platform, other users, or third parties.</p>
+      <p>You may terminate your account at any time by using the deletion flow in the App (Settings → Privacy &amp; Data → Delete My Data) or by submitting a request at <a href="/delete">brimz.tech/delete</a>.</p>
+      <p>Upon termination, your right to use the App ceases immediately. Sections 8, 10, 11, 12, and 14 of these Terms survive termination.</p>
+    </div>
+
+    <div class="section" id="s14">
+      <div class="section-num">14</div>
+      <h2>Governing Law</h2>
+      <p>These Terms shall be governed by and construed in accordance with the laws of the State of Maryland, United States, without regard to its conflict of law provisions.</p>
+      <p>Any dispute arising out of or relating to these Terms or the Brimz platform that cannot be resolved informally shall be submitted to binding arbitration in accordance with the rules of the American Arbitration Association, conducted in Maryland. You waive your right to a jury trial or class action proceeding.</p>
+    </div>
+
+    <div class="section" id="s15">
+      <div class="section-num">15</div>
+      <h2>Changes to These Terms</h2>
+      <p>Brimz reserves the right to update these Terms at any time. When we make material changes, we will:</p>
+      <ul>
+        <li>Update the "Last Updated" date at the top of this page</li>
+        <li>Notify you via push notification or email if you have an account</li>
+      </ul>
+      <p>Continued use of the App after the effective date of any update constitutes your acceptance of the revised Terms. If you do not agree to the revised Terms, you must stop using the App and delete your account.</p>
+    </div>
+
+    <div class="section" id="s16">
+      <div class="section-num">16</div>
+      <h2>Contact</h2>
+      <p>If you have any questions about these Terms, please contact us:</p>
+      <div class="contact-block">
+        <p><strong>Brimz Legal</strong></p>
+        <p>Email: <a href="mailto:legal@brimz.tech">legal@brimz.tech</a></p>
+        <p>Website: <a href="https://brimz.tech">brimz.tech</a></p>
+        <p>Support: <a href="mailto:support@brimz.tech">support@brimz.tech</a></p>
+      </div>
+    </div>
+
+    <div class="doc-footer">
+      <div class="doc-footer-left">© 2026 Brimz · All rights reserved</div>
+      <div class="doc-footer-links">
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/delete">Delete My Data</a>
+        <a href="https://brimz.tech">Back to Brimz</a>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

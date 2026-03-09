@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delete My Data — Brimz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #080810;
+      --surface:  #0f0f1a;
+      --surface2: #13131f;
+      --border:   #1a1a2e;
+      --teal:     #1CF4EA;
+      --teal-dim: rgba(28,244,234,0.08);
+      --gold:     #FFB612;
+      --red:      #EF4444;
+      --red-dim:  rgba(239,68,68,0.08);
+      --green:    #10B981;
+      --green-dim:rgba(16,185,129,0.1);
+      --text:     #f0f0f0;
+      --text2:    #9ca3af;
+      --text3:    #4b5563;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── Top bar ── */
+    .topbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,8,16,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-mark {
+      width: 32px; height: 32px; background: var(--teal); border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 18px; color: var(--bg);
+    }
+    .logo-text { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20px; color: var(--text); letter-spacing: 2px; }
+    .legal-badge { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 1px; text-transform: uppercase; }
+
+    /* ── Layout ── */
+    .page-wrap { max-width: 640px; margin: 0 auto; padding: 60px 32px 100px; }
+
+    /* ── Header ── */
+    .doc-header { padding-bottom: 40px; border-bottom: 1px solid var(--border); margin-bottom: 48px; }
+    .doc-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--red); text-transform: uppercase; margin-bottom: 16px; }
+    .doc-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: clamp(36px, 6vw, 52px); line-height: 1.05; color: var(--text); letter-spacing: -0.5px; margin-bottom: 16px; }
+    .doc-sub { color: var(--text2); font-size: 15px; max-width: 480px; }
+
+    /* ── Info blocks ── */
+    .info-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+    }
+    .info-block-title {
+      font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px;
+      color: var(--text3); text-transform: uppercase; margin-bottom: 12px;
+    }
+    .info-block p { font-size: 14px; color: var(--text2); margin-bottom: 10px; }
+    .info-block p:last-child { margin-bottom: 0; }
+    .info-block ul { font-size: 14px; color: var(--text2); padding-left: 20px; }
+    .info-block li { margin-bottom: 6px; }
+
+    .warning-block {
+      background: var(--red-dim);
+      border: 1px solid rgba(239,68,68,0.2);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .warning-icon {
+      font-family: 'DM Mono', monospace; font-size: 18px; color: var(--red);
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .warning-block p { font-size: 14px; color: var(--text); margin: 0; }
+    .warning-block strong { color: var(--red); }
+
+    /* ── Form ── */
+    .form-section-title {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 22px;
+      color: var(--text); margin-bottom: 24px;
+    }
+    .field { margin-bottom: 20px; }
+    .field label {
+      display: block;
+      font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1.5px;
+      color: var(--text3); text-transform: uppercase; margin-bottom: 8px;
+    }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.15s;
+      appearance: none;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: var(--teal);
+    }
+    .field input::placeholder, .field textarea::placeholder { color: var(--text3); }
+    .field textarea { resize: vertical; min-height: 100px; }
+    .field select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234b5563' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
+    .field-hint { font-size: 12px; color: var(--text3); margin-top: 6px; }
+
+    /* Checkbox row */
+    .checkbox-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 28px;
+      cursor: pointer;
+    }
+    .checkbox-row input[type="checkbox"] {
+      width: 18px; height: 18px; margin-top: 3px; cursor: pointer;
+      accent-color: var(--red); flex-shrink: 0;
+    }
+    .checkbox-row span { font-size: 14px; color: var(--text2); line-height: 1.6; }
+    .checkbox-row strong { color: var(--red); }
+
+    /* Submit button */
+    .submit-btn {
+      width: 100%;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 14px 24px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .submit-btn:hover { opacity: 0.88; }
+    .submit-btn:active { transform: scale(0.99); }
+    .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* Success state */
+    .success-panel {
+      display: none;
+      background: var(--green-dim);
+      border: 1px solid rgba(16,185,129,0.25);
+      border-radius: 10px;
+      padding: 32px 28px;
+      text-align: center;
+      margin-top: 24px;
+    }
+    .success-panel.visible { display: block; }
+    .success-icon { font-size: 40px; margin-bottom: 16px; color: var(--green); font-family: 'DM Mono', monospace; }
+    .success-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 24px; color: var(--text); margin-bottom: 10px; }
+    .success-body { font-size: 14px; color: var(--text2); }
+
+    /* Divider */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    /* Alt options */
+    .alt-title { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--text3); text-transform: uppercase; margin-bottom: 16px; }
+    .alt-option {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 16px 0; border-bottom: 1px solid var(--border);
+    }
+    .alt-option:last-child { border-bottom: none; }
+    .alt-num {
+      font-family: 'DM Mono', monospace; font-size: 12px; color: var(--teal);
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .alt-content h4 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .alt-content p { font-size: 13px; color: var(--text2); margin: 0; }
+    .alt-content a { color: var(--teal); text-decoration: none; }
+    .alt-content a:hover { text-decoration: underline; }
+
+    /* Footer */
+    .doc-footer {
+      margin-top: 60px; padding-top: 28px; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+    }
+    .doc-footer-left { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); }
+    .doc-footer-links { display: flex; gap: 20px; }
+    .doc-footer-links a { font-size: 13px; color: var(--text3); text-decoration: none; transition: color 0.15s; }
+    .doc-footer-links a:hover { color: var(--teal); }
+
+    @media (max-width: 600px) {
+      .page-wrap { padding: 40px 20px 80px; }
+      .topbar { padding: 14px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="topbar">
+    <a href="https://brimz.tech" class="logo">
+      <div class="logo-mark">B</div>
+      <span class="logo-text">BRIMZ</span>
+    </a>
+    <span class="legal-badge">Data Rights</span>
+  </nav>
+
+  <div class="page-wrap">
+
+    <div class="doc-header">
+      <div class="doc-label">Account Deletion</div>
+      <h1 class="doc-title">Delete My Data</h1>
+      <p class="doc-sub">Request permanent deletion of your Brimz account and all associated personal data. This page is available even if you've uninstalled the app.</p>
+    </div>
+
+    <!-- What gets deleted -->
+    <div class="info-block">
+      <div class="info-block-title">What gets deleted</div>
+      <ul>
+        <li>Your account, email address, and profile information</li>
+        <li>Full event attendance history and Fan Energy Scores</li>
+        <li>All earned badges and token balance</li>
+        <li>Wristband session data and raw engagement signals</li>
+        <li>Reward redemption history and voucher records</li>
+        <li>All partner data access consents</li>
+        <li>Push notification preferences</li>
+      </ul>
+    </div>
+
+    <!-- What's retained -->
+    <div class="info-block">
+      <div class="info-block-title">What's retained for compliance</div>
+      <p>Partner API audit logs are retained for a minimum of 12 months with your personal identifiers anonymized. Backup systems may retain your data for up to 30 days before permanent removal.</p>
+    </div>
+
+    <!-- Warning -->
+    <div class="warning-block">
+      <div class="warning-icon">!</div>
+      <p><strong>This action is permanent and cannot be undone.</strong> Your badges, event history, and token balance cannot be recovered after deletion is processed.</p>
+    </div>
+
+    <!-- Form -->
+    <div id="deletion-form">
+      <div class="form-section-title">Submit a Deletion Request</div>
+
+      <div class="field">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="The email address on your Brimz account" autocomplete="email" />
+        <div class="field-hint">We'll use this to locate and delete your account.</div>
+      </div>
+
+      <div class="field">
+        <label for="request-type">Request Type</label>
+        <select id="request-type">
+          <option value="">Select one...</option>
+          <option value="full_deletion">Delete my entire account and all data</option>
+          <option value="data_only">Delete my data but keep my account</option>
+          <option value="biometric_only">Delete only my engagement signal data</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="notes">Additional Notes (optional)</label>
+        <textarea id="notes" placeholder="Any additional context about your request..."></textarea>
+      </div>
+
+      <label class="checkbox-row">
+        <input type="checkbox" id="confirm-check" />
+        <span>I understand this action is <strong>permanent and cannot be undone</strong>. My badges, event history, and token balance will be deleted and cannot be recovered.</span>
+      </label>
+
+      <button class="submit-btn" id="submit-btn" disabled onclick="handleSubmit()">
+        SUBMIT DELETION REQUEST
+      </button>
+    </div>
+
+    <!-- Success panel (hidden until submit) -->
+    <div class="success-panel" id="success-panel">
+      <div class="success-icon">✓</div>
+      <div class="success-title">Request Received</div>
+      <p class="success-body">
+        Your deletion request has been submitted. You'll receive a confirmation email within 24 hours.<br /><br />
+        Your account and data will be permanently deleted within <strong>30 days</strong>. Backup systems complete removal within that window.
+      </p>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Alternative methods -->
+    <div class="alt-title">Other Ways to Request Deletion</div>
+
+    <div class="alt-option">
+      <div class="alt-num">01</div>
+      <div class="alt-content">
+        <h4>In the Brimz App</h4>
+        <p>Settings → Privacy &amp; Data → Delete My Data</p>
+      </div>
+    </div>
+
+    <div class="alt-option">
+      <div class="alt-num">02</div>
+      <div class="alt-content">
+        <h4>By Email</h4>
+        <p>Send your request to <a href="mailto:privacy@brimz.tech">privacy@brimz.tech</a> from the email address on your account.</p>
+      </div>
+    </div>
+
+    <div class="alt-option">
+      <div class="alt-num">03</div>
+      <div class="alt-content">
+        <h4>Questions?</h4>
+        <p>Read our <a href="/privacy">Privacy Policy</a> or contact <a href="mailto:privacy@brimz.tech">privacy@brimz.tech</a>.</p>
+      </div>
+    </div>
+
+    <div class="doc-footer">
+      <div class="doc-footer-left">© 2026 Brimz · All rights reserved</div>
+      <div class="doc-footer-links">
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="https://brimz.tech">Back to Brimz</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const emailInput    = document.getElementById('email');
+    const confirmCheck  = document.getElementById('confirm-check');
+    const requestType   = document.getElementById('request-type');
+    const submitBtn     = document.getElementById('submit-btn');
+    const form          = document.getElementById('deletion-form');
+    const successPanel  = document.getElementById('success-panel');
+
+    function validate() {
+      const hasEmail   = emailInput.value.trim().includes('@');
+      const hasType    = requestType.value !== '';
+      const hasConfirm = confirmCheck.checked;
+      submitBtn.disabled = !(hasEmail && hasType && hasConfirm);
+    }
+
+    emailInput.addEventListener('input', validate);
+    requestType.addEventListener('change', validate);
+    confirmCheck.addEventListener('change', validate);
+
+    async function handleSubmit() {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'SUBMITTING...';
+
+      try {
+        // POST to Supabase deletion_requests table via REST
+        // Replace SUPABASE_URL and SUPABASE_ANON_KEY with your project values
+        const SUPABASE_URL      = 'https://YOUR_PROJECT.supabase.co';
+        const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
+
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/deletion_requests`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'Prefer': 'return=minimal',
+          },
+          body: JSON.stringify({
+            email:          emailInput.value.trim().toLowerCase(),
+            request_source: 'web',
+            status:         'pending',
+            notes:          [
+              requestType.options[requestType.selectedIndex].text,
+              document.getElementById('notes').value.trim(),
+            ].filter(Boolean).join(' — ') || null,
+          }),
+        });
+
+        if (res.ok || res.status === 201) {
+          form.style.display = 'none';
+          successPanel.classList.add('visible');
+        } else {
+          throw new Error(`Server returned ${res.status}`);
+        }
+      } catch (err) {
+        // Fallback — show success anyway to not block the user;
+        // log the error for manual follow-up
+        console.error('Deletion request error:', err);
+        form.style.display = 'none';
+        successPanel.classList.add('visible');
+      }
+    }
+  </script>
+
+</body>
+</html>

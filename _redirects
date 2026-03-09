@@ -1,0 +1,7 @@
+# Brimz legal page redirects
+# Add these to your existing _redirects file in the brimz.tech repo root
+# or merge with existing rules — the legal routes go at the top
+
+/privacy    /privacy.html    200
+/delete     /delete.html     200
+/terms      /terms.html      200
