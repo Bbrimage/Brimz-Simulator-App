@@ -2,41 +2,95 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@layer base {
+  * {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #080810;
+    color: #ffffff;
+    font-family: 'Barlow', sans-serif;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #080810;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1E1E38;
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #374151;
+  }
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Phone frame scrollable content */
+.phone-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.phone-scroll::-webkit-scrollbar {
+  display: none;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Electric border wires */
+.wire-track-h {
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: rgba(28, 244, 234, 0.15);
+  overflow: hidden;
+}
+.wire-track-v {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: rgba(28, 244, 234, 0.15);
+  overflow: hidden;
+}
+.wire-zap-h {
+  position: absolute;
+  width: 35%;
+  height: 100%;
+  background: #1CF4EA;
+  box-shadow: 0 0 8px #1CF4EA, 0 0 16px #1CF4EA;
+  opacity: 0.9;
+}
+.wire-zap-v {
+  position: absolute;
+  height: 30%;
+  width: 100%;
+  background: #1CF4EA;
+  box-shadow: 0 0 8px #1CF4EA;
+  opacity: 0.85;
 }
 
-/* Custom scrollbar styles */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* Pump text glitch */
+.pump-glitch {
+  text-shadow:
+    -1px 0 rgba(28, 244, 234, 0.7),
+     1px 0 rgba(239, 68, 68, 0.5);
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f5f9;
-  border-radius: 10px;
+/* Admin sidebar transitions */
+.sidebar-item {
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+/* Recharts overrides */
+.recharts-tooltip-wrapper {
+  outline: none;
 }

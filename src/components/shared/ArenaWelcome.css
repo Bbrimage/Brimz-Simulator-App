@@ -1,0 +1,264 @@
+/* ── Arena Welcome Screen ────────────────────────────────── */
+.aw-root {
+  position: fixed; inset: 0; z-index: 500;
+  background: #080810;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  overflow: hidden;
+  animation: awFadeIn .4s ease forwards;
+}
+@keyframes awFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.aw-exit {
+  animation: awFadeOut .6s ease forwards !important;
+}
+@keyframes awFadeOut {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(1.03); }
+}
+
+/* ── Scanlines ───────────────────────────────────────────── */
+.aw-scanlines {
+  position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0,0,0,0.18) 3px,
+    rgba(0,0,0,0.18) 4px
+  );
+  opacity: 0.6;
+}
+
+/* ── Glow blobs ──────────────────────────────────────────── */
+.aw-glow {
+  position: absolute; border-radius: 50%;
+  pointer-events: none; z-index: 0;
+}
+.aw-glow-1 {
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(28,244,234,0.12) 0%, transparent 70%);
+  top: -200px; left: -200px;
+  animation: awGlowFloat 8s ease-in-out infinite;
+}
+.aw-glow-2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(255,182,18,0.08) 0%, transparent 70%);
+  bottom: -100px; right: -100px;
+  animation: awGlowFloat 6s ease-in-out infinite reverse;
+}
+@keyframes awGlowFloat {
+  0%,100% { transform: translate(0,0); }
+  50%      { transform: translate(30px, 20px); }
+}
+
+/* ── Corner brackets ─────────────────────────────────────── */
+.aw-corner {
+  position: absolute; width: 40px; height: 40px;
+  pointer-events: none; z-index: 2;
+  opacity: 0.4;
+}
+.aw-tl { top: 20px; left: 20px;  border-top: 2px solid #1CF4EA; border-left: 2px solid #1CF4EA; }
+.aw-tr { top: 20px; right: 20px; border-top: 2px solid #1CF4EA; border-right: 2px solid #1CF4EA; }
+.aw-bl { bottom: 20px; left: 20px;  border-bottom: 2px solid #1CF4EA; border-left: 2px solid #1CF4EA; }
+.aw-br { bottom: 20px; right: 20px; border-bottom: 2px solid #1CF4EA; border-right: 2px solid #1CF4EA; }
+
+/* ── HUD bars ────────────────────────────────────────────── */
+.aw-hud-top, .aw-hud-bottom {
+  position: absolute; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px;
+  z-index: 3;
+}
+.aw-hud-top    { top: 0; height: 44px; border-bottom: 1px solid rgba(28,244,234,0.12); }
+.aw-hud-bottom { bottom: 0; height: 40px; border-top: 1px solid rgba(28,244,234,0.12); }
+.aw-hud-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 3px;
+  color: rgba(28,244,234,0.35); text-transform: uppercase;
+}
+.aw-hud-status {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 3px;
+  color: #10B981; display: flex; align-items: center; gap: 6px;
+}
+.aw-live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #10B981;
+  animation: awBlink 1.2s infinite;
+}
+@keyframes awBlink {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.2; }
+}
+
+/* ── Main content ────────────────────────────────────────── */
+.aw-content {
+  position: relative; z-index: 4;
+  display: flex; flex-direction: column;
+  align-items: center;
+  gap: 48px;
+  padding: 60px 24px;
+  width: 100%; max-width: 860px;
+  text-align: center;
+}
+
+/* ── Headline ────────────────────────────────────────────── */
+.aw-kicker {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 4px;
+  color: rgba(28,244,234,0.6);
+  margin-bottom: 16px;
+  animation: awFlicker 4s infinite;
+}
+@keyframes awFlicker {
+  0%,95%,100% { opacity: 1; }
+  96%          { opacity: 0.4; }
+  97%          { opacity: 1; }
+  98%          { opacity: 0.2; }
+  99%          { opacity: 1; }
+}
+.aw-h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 10vw, 120px);
+  line-height: 0.9;
+  letter-spacing: 2px;
+  color: #ffffff;
+  margin: 0 0 20px;
+  /* Glitch text-shadow flicker */
+  animation: awTextGlitch 6s infinite;
+}
+@keyframes awTextGlitch {
+  0%,88%,100% {
+    text-shadow: none;
+  }
+  89% {
+    text-shadow: -3px 0 #1CF4EA, 3px 0 #FFB612;
+    transform: translate(-2px, 0);
+  }
+  90% {
+    text-shadow: 3px 0 #1CF4EA, -3px 0 #FFB612;
+    transform: translate(2px, 0);
+  }
+  91% {
+    text-shadow: none;
+    transform: translate(0, 0);
+  }
+  92% {
+    text-shadow: -2px 0 #1CF4EA;
+    transform: translate(-1px, 0);
+  }
+  93%,100% {
+    text-shadow: none;
+    transform: translate(0, 0);
+  }
+}
+.aw-h1-line2.aw-teal { color: #1CF4EA; }
+.aw-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: clamp(16px, 3vw, 22px);
+  letter-spacing: 4px; text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  min-height: 28px;
+}
+
+/* ── Steps ───────────────────────────────────────────────── */
+.aw-steps {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  width: 100%;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.aw-steps.visible {
+  opacity: 1; transform: translateY(0);
+}
+.aw-step {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(28,244,234,0.12);
+  border-radius: 8px; padding: 20px 18px;
+  text-align: left;
+  opacity: 0; transform: translateY(12px);
+  transition: opacity .4s ease, transform .4s ease;
+}
+.aw-steps.visible .aw-step {
+  opacity: 1; transform: translateY(0);
+}
+.aw-step-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px; color: #1CF4EA;
+  line-height: 1; flex-shrink: 0; width: 32px;
+}
+.aw-step-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800; font-size: 13px; letter-spacing: 1.5px;
+  color: #ffffff; text-transform: uppercase; margin-bottom: 5px;
+}
+.aw-step-text {
+  font-family: 'Barlow', sans-serif;
+  font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.6;
+}
+
+/* ── Enter button ────────────────────────────────────────── */
+.aw-btn-wrap {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  opacity: 0; transform: translateY(12px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.aw-btn-wrap.visible {
+  opacity: 1; transform: translateY(0);
+}
+.aw-btn {
+  display: flex; align-items: center; gap: 14px;
+  background: #1CF4EA; color: #080810;
+  border: none; border-radius: 6px;
+  padding: 18px 48px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px; letter-spacing: 3px;
+  cursor: pointer;
+  box-shadow: 0 0 40px rgba(28,244,234,0.4), 0 0 80px rgba(28,244,234,0.15);
+  animation: awBtnPulse 2.5s ease-in-out infinite;
+  transition: transform .15s;
+}
+.aw-btn:hover { transform: scale(1.03); }
+@keyframes awBtnPulse {
+  0%,100% { box-shadow: 0 0 30px rgba(28,244,234,0.35), 0 0 60px rgba(28,244,234,0.1); }
+  50%      { box-shadow: 0 0 55px rgba(28,244,234,0.65), 0 0 100px rgba(28,244,234,0.25); }
+}
+.aw-btn-arrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px; font-weight: 900;
+}
+.aw-btn-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 2px;
+  color: rgba(255,255,255,0.2);
+}
+
+/* ── Mobile ──────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .aw-content { padding: 56px 28px; gap: 36px; }
+  .aw-h1 { font-size: clamp(48px, 8vw, 88px); }
+  .aw-steps { gap: 12px; }
+  .aw-hud-top, .aw-hud-bottom { padding: 0 20px; }
+  .aw-hud-label { font-size: 8px; letter-spacing: 2px; }
+}
+
+@media (max-width: 600px) {
+  .aw-steps { grid-template-columns: 1fr; }
+  .aw-content { gap: 24px; padding: 48px 16px; }
+  .aw-step { padding: 14px 12px; }
+  .aw-step-title { font-size: 12px; }
+  .aw-step-text { font-size: 11px; }
+  .aw-btn { padding: 14px 28px; font-size: 20px; }
+  .aw-btn-arrow { font-size: 20px; }
+  .aw-corner { width: 24px; height: 24px; }
+  .aw-hud-top, .aw-hud-bottom { padding: 0 16px; }
+  .aw-hud-label { font-size: 7px; letter-spacing: 1.5px; }
+  .aw-kicker { font-size: 9px; letter-spacing: 3px; }
+  .aw-sub { font-size: 14px; letter-spacing: 3px; }
+}

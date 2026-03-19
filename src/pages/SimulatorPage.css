@@ -1,0 +1,84 @@
+/* ── Simulator Page Layout ───────────────────────────────── */
+
+/* Mobile first: single column, controls on top, phone below */
+.sim-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px 20px 60px;
+}
+
+.sim-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* Side panel: controls or intro — full width on mobile */
+.sim-side {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  /* Mobile: comes first in DOM = renders on top */
+}
+
+/* Phone column: phone + badges stacked */
+.sim-phone-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  flex-shrink: 0;
+}
+
+/* Desktop ≥900px: side by side */
+@media (min-width: 900px) {
+  .sim-row {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .sim-side {
+    max-width: 340px;
+    /* Left side on desktop */
+  }
+
+  .sim-phone-col {
+    /* Right side on desktop */
+  }
+}
+
+/* ── Small mobile ≤600px ────────────────────────────────── */
+@media (max-width: 600px) {
+  .sim-body {
+    padding: 24px 16px 48px;
+  }
+
+  .sim-row {
+    gap: 24px;
+  }
+
+  .sim-side {
+    max-width: 100%;
+  }
+
+  /* Scale the phone down so it fits small screens without scrolling */
+  .sim-phone-col {
+    transform: scale(0.88);
+    transform-origin: top center;
+    margin-bottom: -48px; /* compensate for scale shrink */
+  }
+}
+
+@media (max-width: 380px) {
+  .sim-phone-col {
+    transform: scale(0.78);
+    margin-bottom: -80px;
+  }
+}
