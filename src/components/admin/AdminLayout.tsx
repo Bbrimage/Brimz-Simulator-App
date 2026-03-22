@@ -57,8 +57,10 @@ export default function AdminLayout() {
 
         {/* Logo */}
         <div className="flex items-center gap-3 px-5 py-5 border-b" style={{ borderColor: COLORS.border }}>
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center font-black text-base"
-               style={{ background: BRAND.teal, color: COLORS.bg }}>B</div>
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden"
+               style={{ background: BRAND.teal }}>
+            <img src="/images/Icon_Brimz_Logo.png" alt="Brimz" className="w-full h-full object-contain" />
+          </div>
           <div>
             <div className="font-display font-black text-base tracking-widest text-white">BRIMZ</div>
             <div className="font-mono text-[9px] tracking-[2px]" style={{ color: COLORS.muted }}>ADMIN PORTAL</div>

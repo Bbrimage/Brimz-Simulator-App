@@ -103,7 +103,7 @@ export default function LandingPage() {
               <div className="lp-cs-header">
                 <div className="lp-cs-logo-row">
                   <div className="lp-cs-logo-mark">
-                    <span className="lp-cs-logo-mark-b">B</span>
+                    <img src="/images/Icon_Brimz_Logo.png" alt="Brimz" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                   </div>
                   <span className="lp-cs-logo-text">BRIMZ</span>
                 </div>
@@ -117,7 +117,7 @@ export default function LandingPage() {
                   <div className="lp-cs-ring" />
                   <div className="lp-cs-ring" />
                   <div className="lp-cs-circle">
-                    <span className="lp-cs-circle-b">B</span>
+                    <img src="/images/Icon_Brimz_Logo.png" alt="Brimz" style={{ width: '60%', height: '60%', objectFit: 'contain' }} />
                   </div>
                 </div>
                 <div className="lp-cs-status">
