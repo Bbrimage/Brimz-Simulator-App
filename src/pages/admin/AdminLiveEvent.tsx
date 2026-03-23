@@ -120,7 +120,7 @@ export default function AdminLiveEvent() {
               {[
                 { label: 'FANS LIVE',   value: liveCount.toLocaleString(),  color: BRAND.teal },
                 { label: 'AVG ENERGY',  value: avgEnergy.toLocaleString(),   color: BRAND.gold },
-                { label: 'TOKENS OUT',  value: event.total_tokens_distributed.toLocaleString(), color: BRAND.green },
+                { label: 'ENERGY SPENT', value: event.total_tokens_distributed.toLocaleString(), color: BRAND.green },
               ].map(s => (
                 <div key={s.label} className="rounded-lg border p-4" style={{ background: COLORS.surface, borderColor: COLORS.border }}>
                   <p className="font-mono text-[8px] font-black tracking-[1.5px] mb-2" style={{ color: COLORS.muted }}>{s.label}</p>

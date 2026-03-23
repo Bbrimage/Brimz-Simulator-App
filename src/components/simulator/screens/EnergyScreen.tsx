@@ -18,13 +18,13 @@ function formatTime(sec: number): string {
 
 export default function EnergyScreen() {
   const { state, setScreen } = useSim();
-  const { energyScore, tokensEarned, energySpent, challenge, feed } = state;
+  const { energyScore, energySpent, challenge, feed } = state;
 
   const [pumpIdx, setPumpIdx] = useState(0);
   const [pumpVisible, setPumpVisible] = useState(true);
   const pumpRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const available     = tokensEarned - energySpent;
+  const available     = energyScore - energySpent;
   const prizeProgress = Math.min(energyScore / PRIZE_GOAL, 1);
   const prizeUnlocked = energyScore >= PRIZE_GOAL;
 

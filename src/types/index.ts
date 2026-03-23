@@ -236,7 +236,6 @@ export interface SimState {
   connected: boolean;
   screen: SimScreen;
   energyScore: number;
-  tokensEarned: number;
   energySpent: number;
   challenge: SimChallenge | null;
   feed: SimFeedItem[];

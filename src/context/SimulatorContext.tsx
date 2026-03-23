@@ -48,7 +48,6 @@ const INITIAL: SimState = {
   connected: false,
   screen: 'connect',
   energyScore: 0,
-  tokensEarned: 0,
   energySpent: 0,
   challenge: null,
   feed: [],
@@ -128,20 +127,14 @@ export function SimulatorProvider({ children }: { children: React.ReactNode }) {
       }
 
       const pts = Math.floor(baseRate * (0.7 + Math.random() * 0.6));
-      const tokens = Math.floor(pts / 10);
 
       setState(s => {
-        const newScore  = s.energyScore + pts;
-        const newTokens = s.tokensEarned + tokens;
-
         if (progress % 20 < 1.5) {
           addFeedItem({ type: 'energy_drop', title: `Energy burst: +${pts} pts`, points: pts });
         }
-
         return {
           ...s,
-          energyScore:      newScore,
-          tokensEarned:     newTokens,
+          energyScore:        s.energyScore + pts,
           simulationProgress: progress,
         };
       });
@@ -162,8 +155,7 @@ export function SimulatorProvider({ children }: { children: React.ReactNode }) {
   function redeemReward(reward: SimReward) {
     setState(s => ({
       ...s,
-      tokensEarned: s.tokensEarned, // total earned never decreases
-      energySpent:  s.energySpent + reward.token_cost,
+      energySpent: s.energySpent + reward.token_cost,
     }));
     addFeedItem({ type: 'reward_unlocked', title: `Reward redeemed: ${reward.name}`, points: -reward.token_cost });
   }

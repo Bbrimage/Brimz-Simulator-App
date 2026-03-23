@@ -542,11 +542,42 @@ export function SuperAdminBracelets() {
 
 // ── SuperAdminSettings ─────────────────────────────────────────────────────
 export function SuperAdminPlatformSettings() {
-  const [saved, setSaved] = useState(false);
+  const [tickInterval,         setTickInterval]         = useState('30');
+  const [challengeMultiplier,  setChallengeMultiplier]  = useState('2.0');
+  const [prizeGoal,            setPrizeGoal]            = useState('5000');
+  const [loading,  setLoading]  = useState(true);
+  const [saving,   setSaving]   = useState(false);
+  const [saved,    setSaved]    = useState(false);
+  const [saveErr,  setSaveErr]  = useState('');
+
+  useEffect(() => { loadSettings(); }, []);
+
+  async function loadSettings() {
+    const { data } = await supabase.from('platform_settings').select('*').limit(1).single();
+    if (data) {
+      setTickInterval(String(data.tick_interval_seconds ?? 30));
+      setChallengeMultiplier(String(data.challenge_multiplier ?? 2.0));
+      setPrizeGoal(String(data.prize_goal_pts ?? 5000));
+    }
+    setLoading(false);
+  }
 
   async function handleSave() {
+    setSaving(true); setSaveErr('');
+    const payload = {
+      tick_interval_seconds: parseInt(tickInterval)      || 30,
+      challenge_multiplier:  parseFloat(challengeMultiplier) || 2.0,
+      prize_goal_pts:        parseInt(prizeGoal)         || 5000,
+      updated_at:            new Date().toISOString(),
+    };
+    const { data: existing } = await supabase.from('platform_settings').select('id').limit(1).single();
+    const { error } = existing
+      ? await supabase.from('platform_settings').update(payload).eq('id', existing.id)
+      : await supabase.from('platform_settings').insert(payload);
+    setSaving(false);
+    if (error) { setSaveErr(error.message); return; }
     setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+    setTimeout(() => setSaved(false), 2500);
   }
 
   return (
@@ -560,28 +591,32 @@ export function SuperAdminPlatformSettings() {
         <div className="rounded-lg border p-6" style={{ background: COLORS.surface, borderColor: COLORS.border }}>
           <SectionHead title="PLATFORM INFO" />
           <div className="mt-4 flex flex-col gap-0">
-            <InfoRow label="PLATFORM VERSION"  value="2.0.0" />
-            <InfoRow label="SUPABASE PROJECT"  value="Connected" valueColor={BRAND.green} />
-            <InfoRow label="EDGE FUNCTIONS"    value="7 deployed" />
-            <InfoRow label="REALTIME"          value="Active" valueColor={BRAND.green} />
+            <InfoRow label="PLATFORM VERSION" value="2.0.0" />
+            <InfoRow label="SUPABASE PROJECT" value="Connected" valueColor={BRAND.green} />
+            <InfoRow label="EDGE FUNCTIONS"   value="7 deployed" />
+            <InfoRow label="REALTIME"         value="Active" valueColor={BRAND.green} />
           </div>
         </div>
 
         <div className="rounded-lg border p-6" style={{ background: COLORS.surface, borderColor: COLORS.border }}>
           <SectionHead title="GLOBAL DEFAULTS" />
           <p className="text-xs mt-1 mb-5" style={{ color: COLORS.muted }}>
-            These defaults apply to new venues unless overridden at the venue level.
+            These defaults apply to all venues unless overridden at the venue level.
           </p>
-          <div className="grid grid-cols-2 gap-4 mb-5">
-            <FieldInput label="TICK INTERVAL (SEC)" value="30" onChange={() => {}} placeholder="30" />
-            <FieldInput label="TOKEN CONVERSION RATE" value="10" onChange={() => {}} placeholder="10" />
-            <FieldInput label="CHALLENGE MULTIPLIER" value="2.0" onChange={() => {}} placeholder="2.0" />
-            <FieldInput label="PRIZE GOAL (PTS)" value="5000" onChange={() => {}} placeholder="5000" />
-          </div>
-          <button onClick={handleSave}
-                  className="px-6 py-2.5 rounded font-mono text-xs font-black tracking-[1.5px]"
+          {loading ? (
+            <p className="font-mono text-[10px] tracking-[2px] mb-5" style={{ color: COLORS.muted }}>LOADING...</p>
+          ) : (
+            <div className="grid grid-cols-2 gap-4 mb-5">
+              <FieldInput label="TICK INTERVAL (SEC)"   value={tickInterval}        onChange={setTickInterval}        placeholder="30" />
+              <FieldInput label="CHALLENGE MULTIPLIER"  value={challengeMultiplier} onChange={setChallengeMultiplier} placeholder="2.0" />
+              <FieldInput label="PRIZE GOAL (PTS)"      value={prizeGoal}           onChange={setPrizeGoal}           placeholder="5000" />
+            </div>
+          )}
+          {saveErr && <p className="font-mono text-xs mb-3" style={{ color: '#F87171' }}>{saveErr}</p>}
+          <button onClick={handleSave} disabled={saving || loading}
+                  className="px-6 py-2.5 rounded font-mono text-xs font-black tracking-[1.5px] transition-colors disabled:opacity-50"
                   style={{ background: saved ? BRAND.green : BRAND.gold, color: COLORS.bg }}>
-            {saved ? 'SAVED' : 'SAVE DEFAULTS'}
+            {saving ? 'SAVING...' : saved ? 'SAVED ✓' : 'SAVE DEFAULTS'}
           </button>
         </div>
       </div>

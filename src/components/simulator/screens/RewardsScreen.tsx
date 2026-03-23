@@ -11,8 +11,8 @@ const TYPE_MAP: Record<string, Filter> = {
 
 export default function RewardsScreen() {
   const { state, rewards, redeemReward } = useSim();
-  const { tokensEarned, energySpent } = state;
-  const available = tokensEarned - energySpent;
+  const { energyScore, energySpent } = state;
+  const available = energyScore - energySpent;
 
   const [filter, setFilter]   = useState<Filter>('ALL');
   const [selected, setSelected] = useState<typeof rewards[0] | null>(null);

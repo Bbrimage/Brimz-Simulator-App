@@ -3,9 +3,9 @@ import { BRAND, COLORS } from '../../../constants';
 
 export default function HomeScreen() {
   const { state, setScreen } = useSim();
-  const { energyScore, tokensEarned, energySpent } = state;
+  const { energyScore, energySpent } = state;
 
-  const available = tokensEarned - energySpent;
+  const available = energyScore - energySpent;
   const primary   = BRAND.teal;
   const secondary = BRAND.gold;
 
@@ -41,7 +41,7 @@ export default function HomeScreen() {
         <div className="w-px my-2.5" style={{ background: COLORS.border }} />
         <StatCell label="AVG ENERGY" value="1,204"            color={secondary} />
         <div className="w-px my-2.5" style={{ background: COLORS.border }} />
-        <StatCell label="TOKENS OUT" value="48,210"           color={primary}   />
+        <StatCell label="PTS SPENT"  value="48,210"           color={primary}   />
       </div>
 
       {/* Your Status */}
@@ -60,7 +60,7 @@ export default function HomeScreen() {
               <span className="font-display font-black text-[42px] leading-none" style={{ color: secondary }}>
                 {available}
               </span>
-              <span className="font-mono text-[9px] font-bold tracking-[1.5px]" style={{ color: COLORS.muted }}>TOKENS</span>
+              <span className="font-mono text-[9px] font-bold tracking-[1.5px]" style={{ color: COLORS.muted }}>AVAIL. PTS</span>
             </div>
           </div>
           <div className="border-t px-4 py-3" style={{ borderColor: COLORS.border }}>
@@ -84,7 +84,7 @@ export default function HomeScreen() {
               <div className="rounded px-2 py-1 self-start border"
                    style={{ background: primary + '18', borderColor: primary + '35' }}>
                 <span className="font-mono text-[9px] font-black" style={{ color: primary }}>
-                  {r.cost} TKN
+                  {r.cost} PTS
                 </span>
               </div>
             </button>

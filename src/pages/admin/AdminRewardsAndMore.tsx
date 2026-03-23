@@ -73,7 +73,7 @@ export function AdminRewards() {
               </Field>
             </div>
             <div>
-              <Field label="TOKEN COST"><input type="number" value={form.token_cost} onChange={e => setForm(f => ({ ...f, token_cost: +e.target.value }))} className={inputCls} style={inputStyle} /></Field>
+              <Field label="ENERGY COST"><input type="number" value={form.token_cost} onChange={e => setForm(f => ({ ...f, token_cost: +e.target.value }))} className={inputCls} style={inputStyle} /></Field>
             </div>
             <div>
               <Field label="DESCRIPTION"><input value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder="Claim at any concession stand" className={inputCls} style={inputStyle} /></Field>
@@ -160,7 +160,7 @@ export function AdminFans() {
       <div className="rounded-lg border overflow-hidden" style={{ background: COLORS.surface, borderColor: COLORS.border }}>
         <table className="w-full">
           <thead><tr className="border-b" style={{ borderColor: COLORS.border }}>
-            {['Rank', 'Fan', 'Section', 'Energy', 'Tokens', 'Status'].map(h => (
+            {['Rank', 'Fan', 'Section', 'Energy', 'Energy Spent', 'Status'].map(h => (
               <th key={h} className="text-left px-5 py-3 font-mono text-[9px] font-black tracking-[1.5px]" style={{ color: COLORS.muted }}>{h}</th>
             ))}
           </tr></thead>

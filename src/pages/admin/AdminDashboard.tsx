@@ -77,7 +77,7 @@ export default function AdminDashboard() {
   const statCards = [
     { label: 'FANS CONNECTED',   value: stats.totalFans.toLocaleString(),   icon: Users,       color: BRAND.teal  },
     { label: 'AVG ENERGY SCORE', value: stats.avgEnergy.toLocaleString(),   icon: Zap,         color: BRAND.gold  },
-    { label: 'TOKENS DISTRIBUTED', value: stats.tokensOut.toLocaleString(), icon: Coins,       color: BRAND.green },
+    { label: 'ENERGY SPENT',       value: stats.tokensOut.toLocaleString(), icon: Coins,       color: BRAND.green },
     { label: 'ACTIVE EVENTS',    value: stats.activeEvents.toString(),      icon: TrendingUp,  color: BRAND.teal  },
   ];
 
