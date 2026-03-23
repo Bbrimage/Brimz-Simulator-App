@@ -27,8 +27,8 @@ const CROWD_LEVELS: { id: CrowdLevel; label: string; multi: string }[] = [
 ];
 const DURATIONS: { id: SimDuration; label: string }[] = [
   { id: 'instant', label: 'INSTANT' },
-  { id: '2min',    label: '2 MIN'   },
-  { id: '5min',    label: '5 MIN'   },
+  { id: '1min',    label: '1 MIN'   },
+  { id: '3min',    label: '3 MIN'   },
 ];
 
 const mono = "'DM Mono', monospace";
@@ -38,7 +38,7 @@ export default function SimulatorPage() {
   const { state, startSimulation, stopSimulation } = useSim();
   const [fanType,    setFanType]    = React.useState<FanType>('engaged');
   const [crowdLevel, setCrowdLevel] = React.useState<CrowdLevel>('energized');
-  const [duration,   setDuration]   = React.useState<SimDuration>('2min');
+  const [duration,   setDuration]   = React.useState<SimDuration>('1min');
   const [welcomed,   setWelcomed]   = React.useState(false);
 
   const currentScreen = () => {

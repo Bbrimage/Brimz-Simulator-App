@@ -249,9 +249,10 @@
 }
 
 @media (max-width: 600px) {
+  .aw-root { overflow-y: auto; justify-content: flex-start; }
   .aw-steps { grid-template-columns: 1fr; }
-  .aw-content { gap: 24px; padding: 48px 16px; }
-  .aw-step { padding: 14px 12px; }
+  .aw-content { gap: 20px; padding: 52px 16px 48px; }
+  .aw-step { padding: 12px 10px; gap: 10px; }
   .aw-step-title { font-size: 12px; }
   .aw-step-text { font-size: 11px; }
   .aw-btn { padding: 14px 28px; font-size: 20px; }
@@ -261,4 +262,15 @@
   .aw-hud-label { font-size: 7px; letter-spacing: 1.5px; }
   .aw-kicker { font-size: 9px; letter-spacing: 3px; }
   .aw-sub { font-size: 14px; letter-spacing: 3px; }
+}
+
+@media (max-width: 480px) {
+  .aw-h1 { font-size: clamp(36px, 11vw, 52px); margin-bottom: 10px; }
+  .aw-sub { font-size: 12px; letter-spacing: 2px; min-height: 20px; }
+  .aw-kicker { font-size: 8px; letter-spacing: 2px; margin-bottom: 10px; }
+  .aw-content { gap: 16px; }
+  .aw-step-num { font-size: 22px; width: 26px; }
+  .aw-btn { padding: 12px 22px; font-size: 18px; }
+  .aw-btn-arrow { font-size: 18px; }
+  .aw-btn-sub { font-size: 8px; }
 }

@@ -191,7 +191,7 @@ export interface ApiKey {
 
 export type FanType    = 'super' | 'engaged' | 'casual' | 'distracted';
 export type CrowdLevel = 'electric' | 'energized' | 'average' | 'quiet';
-export type SimDuration = 'instant' | '2min' | '5min';
+export type SimDuration = 'instant' | '1min' | '3min';
 
 export type SimScreen = 'connect' | 'home' | 'stats' | 'energy' | 'rewards' | 'settings';
 

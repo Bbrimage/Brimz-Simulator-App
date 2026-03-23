@@ -26,7 +26,7 @@ const CROWD_MULTI: Record<CrowdLevel, number> = {
   electric: 1.4, energized: 1.0, average: 0.7, quiet: 0.4,
 };
 const DURATION_MS: Record<SimDuration, number> = {
-  instant: 0, '2min': 120_000, '5min': 300_000,
+  instant: 0, '1min': 60_000, '3min': 180_000,
 };
 
 // ── Context ────────────────────────────────────────────────────────────────
