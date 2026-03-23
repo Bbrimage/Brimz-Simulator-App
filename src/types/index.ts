@@ -56,14 +56,30 @@ export interface VenueSettings {
   operator_mode: OperatorMode;
 }
 
+export type AdminStatus = 'pending' | 'approved' | 'suspended';
+
 export interface AdminUser {
   id: string;
   auth_user_id: string;
-  venue_id: string;
+  venue_id: string | null;
   role: 'operator' | 'venue_admin';
+  status: AdminStatus;
   full_name: string | null;
   created_at: string;
   venue?: Venue;
+}
+
+export interface VenueInquiry {
+  id: string;
+  org_name: string;
+  league: string | null;
+  capacity: string | null;
+  contact_name: string;
+  email: string;
+  phone: string | null;
+  message: string | null;
+  reviewed: boolean;
+  created_at: string;
 }
 
 export interface SuperAdmin {

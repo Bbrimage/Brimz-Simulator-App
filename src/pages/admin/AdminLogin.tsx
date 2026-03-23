@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAdminAuth } from '../../context/AdminAuthContext';
 import { BRAND, COLORS } from '../../constants';
 
@@ -102,10 +102,10 @@ export default function AdminLogin() {
         </div>
 
         <p className="text-center text-[11px] mt-6" style={{ color: COLORS.dim }}>
-          Not a venue operator?{' '}
-          <a href="https://brimz.tech" className="underline" style={{ color: COLORS.muted }}>
-            Back to brimz.tech
-          </a>
+          No account yet?{' '}
+          <Link to="/admin/signup" style={{ color: BRAND.teal }}>Request access</Link>
+          {' · '}
+          <a href="https://brimz.tech" style={{ color: COLORS.muted }}>Back to brimz.tech</a>
         </p>
       </div>
     </div>

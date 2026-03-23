@@ -7,6 +7,8 @@ import { SimulatorProvider } from './context/SimulatorContext';
 import LandingPage      from './pages/LandingPage';
 import SimulatorPage    from './pages/SimulatorPage';
 import AdminLogin       from './pages/admin/AdminLogin';
+import AdminSignUp      from './pages/admin/AdminSignUp';
+import AdminPending     from './pages/admin/AdminPending';
 import AdminDashboard   from './pages/admin/AdminDashboard';
 import AdminLiveEvent   from './pages/admin/AdminLiveEvent';
 import AdminEvents      from './pages/admin/AdminEvents';
@@ -16,6 +18,7 @@ import SuperAdminLogin  from './pages/superadmin/SuperAdminLogin';
 import {
   SuperAdminDashboard, SuperAdminVenues, SuperAdminNetwork,
   SuperAdminAPIKeys, SuperAdminBracelets, SuperAdminPlatformSettings,
+  SuperAdminAccessRequests,
 } from './pages/superadmin/SuperAdminPages';
 
 // Layouts
@@ -28,6 +31,7 @@ function AdminGuard({ children }: { children: React.ReactNode }) {
   const { adminUser, loading } = useAdminAuth();
   if (loading) return <LoadingScreen />;
   if (!adminUser) return <Navigate to="/admin/login" replace />;
+  if (adminUser.status !== 'approved') return <Navigate to="/admin/pending" replace />;
   return <>{children}</>;
 }
 
@@ -65,7 +69,9 @@ export default function App() {
               <Route path="/simulator" element={<SimulatorPage />} />
 
               {/* Admin */}
-              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin/login"   element={<AdminLogin />} />
+              <Route path="/admin/signup"  element={<AdminSignUp />} />
+              <Route path="/admin/pending" element={<AdminPending />} />
               <Route path="/admin" element={
                 <AdminGuard>
                   <AdminLayout />
@@ -94,6 +100,7 @@ export default function App() {
                 <Route path="network"   element={<SuperAdminNetwork />} />
                 <Route path="apikeys"   element={<SuperAdminAPIKeys />} />
                 <Route path="bracelets" element={<SuperAdminBracelets />} />
+                <Route path="access"    element={<SuperAdminAccessRequests />} />
                 <Route path="settings"  element={<SuperAdminPlatformSettings />} />
               </Route>
 

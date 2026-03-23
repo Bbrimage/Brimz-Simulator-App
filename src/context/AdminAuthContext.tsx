@@ -5,7 +5,8 @@ import type { AdminUser } from '../types';
 interface AdminAuthCtx {
   adminUser: AdminUser | null;
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<string | null>;
+  signIn:  (email: string, password: string) => Promise<string | null>;
+  signUp:  (fullName: string, email: string, password: string) => Promise<string | null>;
   signOut: () => Promise<void>;
 }
 
@@ -59,13 +60,27 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
     return null;
   }
 
+  async function signUp(fullName: string, email: string, password: string): Promise<string | null> {
+    const { data, error } = await supabase.auth.signUp({ email, password });
+    if (error) return error.message;
+    if (!data.user) return 'Sign up failed.';
+
+    const { error: insertError } = await supabase
+      .from('admin_users')
+      .insert({ auth_user_id: data.user.id, full_name: fullName, role: 'operator', status: 'pending', venue_id: null });
+
+    if (insertError) return insertError.message;
+    await loadAdminProfile(data.user.id);
+    return null;
+  }
+
   async function signOut() {
     await supabase.auth.signOut();
     setAdminUser(null);
   }
 
   return (
-    <AdminAuthContext.Provider value={{ adminUser, loading, signIn, signOut }}>
+    <AdminAuthContext.Provider value={{ adminUser, loading, signIn, signUp, signOut }}>
       {children}
     </AdminAuthContext.Provider>
   );

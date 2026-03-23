@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { BRAND, COLORS } from '../../constants';
-import { Plus, X } from 'lucide-react';
+import { Plus, X, Check, Ban } from 'lucide-react';
 import type { Venue, Bracelet, ApiKey } from '../../types';
 
 // ── SuperAdminDashboard ────────────────────────────────────────────────────
@@ -641,3 +641,320 @@ function Toggle({ value, onToggle, color }: { value: boolean; onToggle: () => vo
 const labelCls = 'font-mono text-[9px] font-black tracking-[1.5px] block' as const;
 const inputCls = 'px-3 py-2.5 rounded border text-sm text-white outline-none' as const;
 const inputSt  = { background: COLORS.surface2, borderColor: COLORS.border, fontFamily: '"Barlow", sans-serif' } as const;
+
+// ── SuperAdminAccessRequests ───────────────────────────────────────────────
+export function SuperAdminAccessRequests() {
+  const [tab, setTab]               = useState<'admins' | 'inquiries'>('admins');
+  const [admins, setAdmins]         = useState<any[]>([]);
+  const [inquiries, setInquiries]   = useState<any[]>([]);
+  const [venues, setVenues]         = useState<Venue[]>([]);
+  const [loading, setLoading]       = useState(true);
+
+  // Approval modal
+  const [approving, setApproving]   = useState<any | null>(null);
+  const [selVenue, setSelVenue]     = useState('');
+  const [selRole, setSelRole]       = useState<'operator' | 'venue_admin'>('operator');
+  const [approveBusy, setApproveBusy] = useState(false);
+
+  useEffect(() => { load(); }, []);
+
+  async function load() {
+    setLoading(true);
+    const [adminsRes, inqRes, venuesRes] = await Promise.all([
+      supabase.from('admin_users').select('*').in('status', ['pending', 'suspended']).order('created_at', { ascending: false }),
+      supabase.from('venue_inquiries').select('*').order('created_at', { ascending: false }),
+      supabase.from('venues').select('id, name, team_name').order('name'),
+    ]);
+    setAdmins(adminsRes.data ?? []);
+    setInquiries(inqRes.data ?? []);
+    setVenues((venuesRes.data ?? []) as Venue[]);
+    setLoading(false);
+  }
+
+  async function openApprove(admin: any) {
+    setSelVenue(''); setSelRole('operator'); setApproving(admin);
+  }
+
+  async function confirmApprove() {
+    if (!approving || !selVenue) return;
+    setApproveBusy(true);
+    await supabase.from('admin_users')
+      .update({ status: 'approved', venue_id: selVenue, role: selRole })
+      .eq('id', approving.id);
+    setApproveBusy(false);
+    setApproving(null);
+    load();
+  }
+
+  async function deny(admin: any) {
+    await supabase.from('admin_users').update({ status: 'suspended' }).eq('id', admin.id);
+    load();
+  }
+
+  async function restore(admin: any) {
+    await supabase.from('admin_users').update({ status: 'pending' }).eq('id', admin.id);
+    load();
+  }
+
+  async function markReviewed(id: string) {
+    await supabase.from('venue_inquiries').update({ reviewed: true }).eq('id', id);
+    load();
+  }
+
+  async function deleteInquiry(id: string) {
+    await supabase.from('venue_inquiries').delete().eq('id', id);
+    load();
+  }
+
+  const pending   = admins.filter(a => a.status === 'pending');
+  const suspended = admins.filter(a => a.status === 'suspended');
+
+  const hdCls  = 'font-mono text-[9px] font-black tracking-[1.5px] text-left pb-2 border-b' as const;
+  const cellCls = 'py-3 pr-4 text-sm align-top border-b' as const;
+  const hdSt   = { color: COLORS.muted, borderColor: COLORS.border };
+  const cellSt = { borderColor: COLORS.border + '60', color: '#fff' };
+
+  return (
+    <div className="max-w-5xl mx-auto">
+      {/* Header */}
+      <div className="mb-6">
+        <h1 className="font-display font-black text-2xl tracking-widest text-white mb-1">ACCESS REQUESTS</h1>
+        <p className="font-mono text-[10px]" style={{ color: COLORS.muted }}>
+          Review and approve incoming admin access requests and venue inquiries.
+        </p>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex gap-1 mb-6 p-1 rounded-lg w-fit" style={{ background: COLORS.surface, border: `1px solid ${COLORS.border}` }}>
+        {([
+          { id: 'admins',    label: `ADMIN REQUESTS (${pending.length})` },
+          { id: 'inquiries', label: `VENUE INQUIRIES (${inquiries.filter(i => !i.reviewed).length})` },
+        ] as const).map(t => (
+          <button key={t.id} onClick={() => setTab(t.id)}
+            className="px-4 py-1.5 rounded font-mono text-[10px] font-bold tracking-[1px] transition-all"
+            style={{ background: tab === t.id ? BRAND.gold : 'transparent', color: tab === t.id ? '#000' : COLORS.muted }}>
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {loading ? (
+        <p className="font-mono text-[10px] tracking-[2px]" style={{ color: COLORS.muted }}>LOADING...</p>
+      ) : (
+        <>
+          {/* ── ADMIN REQUESTS ─────────────────────────────────────── */}
+          {tab === 'admins' && (
+            <div className="flex flex-col gap-6">
+
+              {/* Pending */}
+              <div className="rounded-xl border overflow-hidden" style={{ borderColor: COLORS.border, background: COLORS.surface }}>
+                <div className="px-5 py-3 border-b flex items-center justify-between" style={{ borderColor: COLORS.border }}>
+                  <span className="font-mono text-[10px] font-black tracking-[2px]" style={{ color: BRAND.teal }}>
+                    PENDING REVIEW — {pending.length}
+                  </span>
+                </div>
+                {pending.length === 0 ? (
+                  <p className="px-5 py-6 font-mono text-[10px]" style={{ color: COLORS.muted }}>No pending requests.</p>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr>
+                          {['NAME', 'EMAIL', 'REQUESTED', 'ACTIONS'].map(h => (
+                            <th key={h} className={hdCls} style={hdSt}><span className="px-5">{h}</span></th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {pending.map(a => (
+                          <tr key={a.id}>
+                            <td className={cellCls} style={cellSt}><span className="px-5">{a.full_name ?? '—'}</span></td>
+                            <td className={cellCls} style={{ ...cellSt, color: COLORS.muted }}><span className="px-5">{a.email ?? '—'}</span></td>
+                            <td className={cellCls} style={{ ...cellSt, color: COLORS.muted }}>
+                              <span className="px-5 font-mono text-[10px]">{new Date(a.created_at).toLocaleDateString()}</span>
+                            </td>
+                            <td className={cellCls} style={cellSt}>
+                              <span className="px-5 flex items-center gap-2">
+                                <button onClick={() => openApprove(a)}
+                                  className="flex items-center gap-1.5 px-3 py-1.5 rounded font-mono text-[10px] font-bold tracking-[1px] transition-opacity hover:opacity-80"
+                                  style={{ background: BRAND.teal + '20', color: BRAND.teal, border: `1px solid ${BRAND.teal}40` }}>
+                                  <Check size={11} /> APPROVE
+                                </button>
+                                <button onClick={() => deny(a)}
+                                  className="flex items-center gap-1.5 px-3 py-1.5 rounded font-mono text-[10px] font-bold tracking-[1px] transition-opacity hover:opacity-80"
+                                  style={{ background: '#F8717110', color: '#F87171', border: '1px solid #F8717130' }}>
+                                  <Ban size={11} /> DENY
+                                </button>
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+
+              {/* Suspended */}
+              {suspended.length > 0 && (
+                <div className="rounded-xl border overflow-hidden" style={{ borderColor: COLORS.border, background: COLORS.surface }}>
+                  <div className="px-5 py-3 border-b" style={{ borderColor: COLORS.border }}>
+                    <span className="font-mono text-[10px] font-black tracking-[2px]" style={{ color: BRAND.gold }}>
+                      SUSPENDED — {suspended.length}
+                    </span>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr>
+                          {['NAME', 'EMAIL', 'SUSPENDED', 'ACTIONS'].map(h => (
+                            <th key={h} className={hdCls} style={hdSt}><span className="px-5">{h}</span></th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {suspended.map(a => (
+                          <tr key={a.id}>
+                            <td className={cellCls} style={cellSt}><span className="px-5">{a.full_name ?? '—'}</span></td>
+                            <td className={cellCls} style={{ ...cellSt, color: COLORS.muted }}><span className="px-5">{a.email ?? '—'}</span></td>
+                            <td className={cellCls} style={{ ...cellSt, color: COLORS.muted }}>
+                              <span className="px-5 font-mono text-[10px]">{new Date(a.created_at).toLocaleDateString()}</span>
+                            </td>
+                            <td className={cellCls} style={cellSt}>
+                              <span className="px-5">
+                                <button onClick={() => restore(a)}
+                                  className="px-3 py-1.5 rounded font-mono text-[10px] font-bold tracking-[1px] transition-opacity hover:opacity-80"
+                                  style={{ background: BRAND.gold + '15', color: BRAND.gold, border: `1px solid ${BRAND.gold}30` }}>
+                                  RESTORE
+                                </button>
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ── VENUE INQUIRIES ─────────────────────────────────────── */}
+          {tab === 'inquiries' && (
+            <div className="rounded-xl border overflow-hidden" style={{ borderColor: COLORS.border, background: COLORS.surface }}>
+              {inquiries.length === 0 ? (
+                <p className="px-5 py-6 font-mono text-[10px]" style={{ color: COLORS.muted }}>No inquiries yet.</p>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr>
+                        {['ORG / TEAM', 'LEAGUE', 'CAPACITY', 'CONTACT', 'EMAIL', 'SUBMITTED', 'ACTIONS'].map(h => (
+                          <th key={h} className={hdCls} style={hdSt}><span className="px-4">{h}</span></th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {inquiries.map(inq => (
+                        <tr key={inq.id} style={{ opacity: inq.reviewed ? 0.45 : 1 }}>
+                          <td className={cellCls} style={cellSt}><span className="px-4 font-semibold">{inq.org_name}</span></td>
+                          <td className={cellCls} style={{ ...cellSt, color: COLORS.muted }}><span className="px-4">{inq.league ?? '—'}</span></td>
+                          <td className={cellCls} style={{ ...cellSt, color: COLORS.muted }}><span className="px-4 font-mono text-[10px]">{inq.capacity ?? '—'}</span></td>
+                          <td className={cellCls} style={cellSt}><span className="px-4">{inq.contact_name}</span></td>
+                          <td className={cellCls} style={{ ...cellSt, color: COLORS.muted }}><span className="px-4">{inq.email}</span></td>
+                          <td className={cellCls} style={{ ...cellSt, color: COLORS.muted }}>
+                            <span className="px-4 font-mono text-[10px]">{new Date(inq.created_at).toLocaleDateString()}</span>
+                          </td>
+                          <td className={cellCls} style={cellSt}>
+                            <span className="px-4 flex items-center gap-2">
+                              {!inq.reviewed && (
+                                <button onClick={() => markReviewed(inq.id)}
+                                  className="px-3 py-1.5 rounded font-mono text-[10px] font-bold tracking-[1px] transition-opacity hover:opacity-80"
+                                  style={{ background: BRAND.teal + '15', color: BRAND.teal, border: `1px solid ${BRAND.teal}30` }}>
+                                  REVIEWED
+                                </button>
+                              )}
+                              <button onClick={() => deleteInquiry(inq.id)}
+                                className="px-3 py-1.5 rounded font-mono text-[10px] font-bold tracking-[1px] transition-opacity hover:opacity-80"
+                                style={{ background: '#F8717110', color: '#F87171', border: '1px solid #F8717130' }}>
+                                DELETE
+                              </button>
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
+        </>
+      )}
+
+      {/* ── Approval Modal ─────────────────────────────────────────── */}
+      {approving && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/70">
+          <div className="w-full max-w-md rounded-xl border p-7" style={{ background: COLORS.surface, borderColor: COLORS.border }}>
+            <div className="flex items-start justify-between mb-5">
+              <div>
+                <h2 className="font-body font-black text-lg text-white">Approve Admin Access</h2>
+                <p className="font-mono text-[10px] mt-0.5" style={{ color: COLORS.muted }}>
+                  {approving.full_name ?? 'Unknown'} · {approving.email ?? '—'}
+                </p>
+              </div>
+              <button onClick={() => setApproving(null)} style={{ color: COLORS.muted }}><X size={16} /></button>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <div>
+                <label className={labelCls} style={{ color: COLORS.muted }}>ASSIGN VENUE</label>
+                <select value={selVenue} onChange={e => setSelVenue(e.target.value)}
+                  className={`w-full mt-1.5 ${inputCls}`} style={{ ...inputSt, appearance: 'none' as any }}>
+                  <option value="">Select a venue...</option>
+                  {venues.map(v => (
+                    <option key={v.id} value={v.id}>{v.name}{v.team_name ? ` — ${v.team_name}` : ''}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className={labelCls} style={{ color: COLORS.muted }}>ROLE</label>
+                <div className="flex gap-3 mt-1.5">
+                  {([['operator', 'OPERATOR'], ['venue_admin', 'VENUE ADMIN']] as const).map(([id, lbl]) => (
+                    <button key={id} onClick={() => setSelRole(id)}
+                      className="flex-1 py-2.5 rounded font-mono text-[10px] font-bold tracking-[1px] transition-all"
+                      style={{
+                        background: selRole === id ? BRAND.teal + '20' : COLORS.surface2,
+                        color: selRole === id ? BRAND.teal : COLORS.muted,
+                        border: `1px solid ${selRole === id ? BRAND.teal + '60' : COLORS.border}`,
+                      }}>
+                      {lbl}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex gap-3 mt-2">
+                <button onClick={() => setApproving(null)}
+                  className="flex-1 py-3 rounded font-mono text-[10px] font-bold tracking-[1px]"
+                  style={{ background: COLORS.surface2, color: COLORS.muted, border: `1px solid ${COLORS.border}` }}>
+                  CANCEL
+                </button>
+                <button onClick={confirmApprove} disabled={!selVenue || approveBusy}
+                  className="flex-1 py-3 rounded font-mono text-[10px] font-bold tracking-[1px] transition-opacity"
+                  style={{
+                    background: !selVenue || approveBusy ? BRAND.teal + '50' : BRAND.teal,
+                    color: '#000',
+                    cursor: !selVenue || approveBusy ? 'default' : 'pointer',
+                  }}>
+                  {approveBusy ? 'APPROVING...' : 'CONFIRM APPROVAL'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

@@ -4,13 +4,14 @@ import { useSuperAdminAuth } from '../../context/SuperAdminAuthContext';
 import { BRAND, COLORS } from '../../constants';
 import {
   LayoutDashboard, Building2, Network,
-  Key, HardDrive, Settings, LogOut, Menu, X, ChevronRight, Shield,
+  Key, HardDrive, Settings, LogOut, Menu, X, ChevronRight, Shield, UserCheck,
 } from 'lucide-react';
 
 const NAV_ITEMS = [
   { to: '/superadmin/dashboard', label: 'Network Overview', icon: LayoutDashboard },
   { to: '/superadmin/venues',    label: 'Venues',           icon: Building2 },
   { to: '/superadmin/network',   label: 'Live Network',     icon: Network },
+  { to: '/superadmin/access',    label: 'Access Requests',  icon: UserCheck },
   { to: '/superadmin/apikeys',   label: 'API Keys',         icon: Key },
   { to: '/superadmin/bracelets', label: 'Bracelets',        icon: HardDrive },
   { to: '/superadmin/settings',  label: 'Platform',         icon: Settings },
