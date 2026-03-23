@@ -4,8 +4,18 @@ import { useAdminAuth } from '../../context/AdminAuthContext';
 import { supabase } from '../../lib/supabase';
 import { BRAND, COLORS } from '../../constants';
 
-const LEAGUES   = ['NFL', 'NBA', 'NHL', 'MLB', 'MLS', 'NCAA', 'WWE / Wrestling', 'Esports', 'Other'];
+const LEAGUES    = ['NFL', 'NBA', 'NHL', 'MLB', 'MLS', 'NCAA', 'WWE / Wrestling', 'Esports', 'Other'];
 const CAPACITIES = ['Under 5,000', '5,000 – 15,000', '15,000 – 30,000', '30,000 – 60,000', '60,000+'];
+
+const COMPLIANCE_ITEMS = [
+  { id: 0, label: 'I will not sell, share, or transfer fan data to any third party without that fan\'s express written consent.' },
+  { id: 1, label: 'I will not use fan data collected through Brimz for any purpose outside of fan engagement on the Brimz platform.' },
+  { id: 2, label: 'I will ensure our organization complies with all applicable data protection laws, including GDPR and CCPA where applicable.' },
+  { id: 3, label: 'I acknowledge that Brimz owns and operates the platform infrastructure. Fan data is processed under Brimz\'s Privacy Policy and Terms of Service.' },
+  { id: 4, label: 'I will notify Brimz immediately upon discovery of any data breach, unauthorized access, or misuse involving fan data.' },
+  { id: 5, label: 'I understand that misuse of fan data or violation of these terms will result in immediate suspension of our venue\'s platform access.' },
+  { id: 6, label: 'I confirm I am authorized to enter into this agreement on behalf of my organization.' },
+];
 
 const inputCls   = 'w-full px-3.5 py-3 rounded border text-sm text-white outline-none transition-colors bg-transparent';
 const inputStyle = { borderColor: COLORS.border, background: COLORS.bg + '80' };
@@ -17,14 +27,22 @@ export default function AdminSignUp() {
   const [tab, setTab] = useState<'access' | 'inquiry'>('access');
 
   // ── Access request form ────────────────────────────────────────────────────
-  const [access, setAccess]       = useState({ fullName: '', email: '', password: '', confirm: '' });
-  const [accessErr, setAccessErr] = useState('');
+  const [access, setAccess]         = useState({ fullName: '', email: '', password: '', confirm: '' });
+  const [agreed, setAgreed]         = useState<Record<number, boolean>>({});
+  const [accessErr, setAccessErr]   = useState('');
   const [accessBusy, setAccessBusy] = useState(false);
+
+  const allAgreed = COMPLIANCE_ITEMS.every(item => agreed[item.id]);
+
+  function toggleAgreed(id: number) {
+    setAgreed(prev => ({ ...prev, [id]: !prev[id] }));
+  }
 
   async function submitAccess(e: React.FormEvent) {
     e.preventDefault();
     if (access.password !== access.confirm) { setAccessErr('Passwords do not match.'); return; }
     if (access.password.length < 8)         { setAccessErr('Password must be at least 8 characters.'); return; }
+    if (!allAgreed)                         { setAccessErr('You must agree to all data protection terms before submitting.'); return; }
     setAccessErr(''); setAccessBusy(true);
     const err = await signUp(access.fullName, access.email, access.password);
     setAccessBusy(false);
@@ -123,12 +141,53 @@ export default function AdminSignUp() {
                   placeholder="••••••••" required className={inputCls} style={inputStyle} />
               </div>
 
+              {/* Data Protection Agreement */}
+              <div className="rounded-lg border overflow-hidden" style={{ borderColor: COLORS.border }}>
+                <div className="px-4 py-2.5 border-b" style={{ background: BRAND.teal + '0A', borderColor: COLORS.border }}>
+                  <span className="font-mono text-[9px] font-black tracking-[2px]" style={{ color: BRAND.teal }}>
+                    DATA PROTECTION AGREEMENT
+                  </span>
+                </div>
+                <div className="px-4 py-3 flex flex-col gap-3" style={{ background: COLORS.bg + '60' }}>
+                  <p className="font-mono text-[9px] leading-relaxed" style={{ color: COLORS.muted }}>
+                    By submitting this request you agree to the following on behalf of your organization:
+                  </p>
+                  {COMPLIANCE_ITEMS.map(item => (
+                    <label key={item.id} className="flex items-start gap-3 cursor-pointer group">
+                      <div
+                        onClick={() => toggleAgreed(item.id)}
+                        className="mt-0.5 w-4 h-4 rounded shrink-0 flex items-center justify-center transition-all"
+                        style={{
+                          background:   agreed[item.id] ? BRAND.teal : 'transparent',
+                          border:       `1.5px solid ${agreed[item.id] ? BRAND.teal : COLORS.border}`,
+                          cursor:       'pointer',
+                        }}>
+                        {agreed[item.id] && (
+                          <svg width="9" height="7" viewBox="0 0 9 7" fill="none">
+                            <path d="M1 3.5L3.5 6L8 1" stroke="#080810" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        )}
+                      </div>
+                      <span
+                        onClick={() => toggleAgreed(item.id)}
+                        className="text-[11px] leading-relaxed select-none"
+                        style={{ color: agreed[item.id] ? '#fff' : COLORS.muted }}>
+                        {item.label}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
               {accessErr && <p className="font-mono text-xs" style={{ color: '#F87171' }}>{accessErr}</p>}
 
-              <button type="submit" disabled={accessBusy}
+              <button type="submit" disabled={accessBusy || !allAgreed}
                 className="w-full py-3 rounded-lg font-mono text-xs font-bold tracking-[2px] transition-opacity"
-                style={{ background: accessBusy ? BRAND.teal + '60' : BRAND.teal, color: COLORS.bg,
-                         cursor: accessBusy ? 'default' : 'pointer' }}>
+                style={{
+                  background: !allAgreed || accessBusy ? BRAND.teal + '40' : BRAND.teal,
+                  color: COLORS.bg,
+                  cursor: !allAgreed || accessBusy ? 'default' : 'pointer',
+                }}>
                 {accessBusy ? 'SUBMITTING...' : 'SUBMIT REQUEST'}
               </button>
             </form>

@@ -6,6 +6,7 @@ import { SimulatorProvider } from './context/SimulatorContext';
 // Pages
 import LandingPage      from './pages/LandingPage';
 import SimulatorPage    from './pages/SimulatorPage';
+import FanRedirect      from './pages/FanRedirect';
 import AdminLogin       from './pages/admin/AdminLogin';
 import AdminSignUp      from './pages/admin/AdminSignUp';
 import AdminPending     from './pages/admin/AdminPending';
@@ -104,8 +105,8 @@ export default function App() {
                 <Route path="settings"  element={<SuperAdminPlatformSettings />} />
               </Route>
 
-              {/* Fallback */}
-              <Route path="*" element={<Navigate to="/simulator" replace />} />
+              {/* Fallback — direct fans to download the app */}
+              <Route path="*" element={<FanRedirect />} />
             </Routes>
           </SimulatorProvider>
         </SuperAdminAuthProvider>
