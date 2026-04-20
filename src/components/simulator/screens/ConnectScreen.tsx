@@ -34,7 +34,7 @@ export default function ConnectScreen() {
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-lg flex items-center justify-center font-black text-xl"
                style={{ background: BRAND.teal, color: '#080810' }}>
-            <img src="/Icon_Brimz_Logo.png" alt="Brimz Logo" className="w-6 h-6 object-contain" />
+            <img src="/images/Icon_Brimz_Logo.png" alt="Brimz Logo" className="w-6 h-6 object-contain" />
           </div>
           <span className="font-display text-3xl font-black tracking-[0.25em] text-white">BRIMZ</span>
         </div>
