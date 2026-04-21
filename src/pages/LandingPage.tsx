@@ -117,7 +117,7 @@ export default function LandingPage() {
                   <div className="lp-cs-ring" />
                   <div className="lp-cs-ring" />
                   <div className="lp-cs-circle">
-                    <img src="/images/Icon_Brimz_Logo.png" alt="Brimz" style={{ width: '60%', height: '60%', objectFit: 'contain' }} />
+                    <img src="/images/brimz-logo-07-black.jpg" alt="Brimz" style={{ width: '60%', height: '60%', objectFit: 'contain' }} />
                   </div>
                 </div>
                 <div className="lp-cs-status">
