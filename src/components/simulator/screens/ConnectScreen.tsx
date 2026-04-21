@@ -100,13 +100,7 @@ export default function ConnectScreen() {
         {status === 'success' && (
           <p className="font-display font-black text-lg tracking-widest" style={{ color: BRAND.green }}>
             YOU'RE IN!
-          </p>
-        )}
-      </div>
-
-      {/* CTA button */}
-      {status === 'idle' && (
-        <button
+     
           onClick={handleTap}
           className="w-full h-14 font-display font-black text-sm tracking-[3px] transition-opacity hover:opacity-90 z-10"
           style={{ background: BRAND.teal, color: '#080810', borderRadius: '4px', boxShadow: `0 4px 20px ${BRAND.teal}60` }}
