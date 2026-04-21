@@ -248,7 +248,7 @@
 }
 .lp-cs-circle {
   width: 110px; height: 110px; border-radius: 50%;
-  background: #1CF4EA;
+  background: #000000;
   display: flex; align-items: center; justify-content: center;
   position: relative; z-index: 2;
   box-shadow: 0 0 32px rgba(28,244,234,0.55), 0 0 8px rgba(28,244,234,0.3);
