@@ -33,7 +33,16 @@ export default function ConnectScreen() {
       <div className="flex flex-col items-center gap-2 z-10 animate-fade-in">
       <div className="flex items-center gap-3">
   <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: '#1CF4EA' }}>
-    <div className="lp-cs-circle-b">B</div>
+   <div
+      style={{
+        fontFamily: 'Barlow Condensed, sans-serif',
+        fontWeight: 900,
+        fontSize: '20px',
+        color: '#080810',
+        lineHeight: 1,
+      }}
+    >
+      B
   </div>
   <span className="font-display text-3xl font-black tracking-[0.25em] text-white">BRIMZ</span>
         </div>
