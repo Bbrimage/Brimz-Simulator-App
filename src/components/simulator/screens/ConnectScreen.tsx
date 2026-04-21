@@ -30,22 +30,24 @@ export default function ConnectScreen() {
            style={{ background: `radial-gradient(circle, ${BRAND.tealDim} 0%, transparent 70%)`, filter: 'blur(40px)' }} />
 
       {/* Header */}
-   <div className="flex flex-col items-center gap-2 z-10 animate-fade-in">
-     <div className="flex items-center gap-3">
-    <div className="w-9 h-9 rounded-lg flex items-center justify-center font-black text-xl"
-        style={{ background: BRAND.teal, color: '#008010' }}
-      B
-     </div>
-     <span className="font-display text-3xl font-black tracking-[0.25em] text-white">BRIMZ</span>
-  </div>
-    <span className="font-mono text-[10px] font-bold tracking-[3px]" style={{ color: '#4B5563' }}>
+      <div className="flex flex-col items-center gap-2 z-10 animate-fade-in">
+        <div className="flex items-center gap-3">
+          <div
+            className="w-9 h-9 rounded-lg flex items-center justify-center font-black text-xl"
+            style={{ background: BRAND.teal, color: '#080810' }}
+          >
+            B
+          </div>
+          <span className="font-display text-3xl font-black tracking-[0.25em] text-white">BRIMZ</span>
+        </div>
+
+        <span className="font-mono text-[10px] font-bold tracking-[3px]" style={{ color: '#4B5563' }}>
           ARENA FAN EXPERIENCE
         </span>
       </div>
 
       {/* Tap zone */}
       <div className="relative flex items-center justify-center w-[240px] h-[240px] z-10">
-        {/* Rings */}
         {isActive && (
           <>
             <div className="absolute w-[170px] h-[170px] rounded-full border animate-ring-1"
@@ -91,35 +93,38 @@ export default function ConnectScreen() {
             </p>
           </>
         )}
+
         {status === 'scanning' && (
           <p className="font-display font-black text-lg tracking-widest text-white">SCANNING...</p>
         )}
+
         {status === 'connecting' && (
           <p className="font-display font-black text-lg tracking-widest text-white">CONNECTING TO THE GAME</p>
         )}
-       {status === 'success' && (
-  <p
-    className="font-display font-black text-lg tracking-widest"
-    style={{ color: BRAND.green }}
-  >
-    YOU'RE IN!
-  </p>
-)}
-{status === 'idle' && (
-  <button
-    onClick={handleTap}
-    className="w-full h-14 font-display font-black text-sm tracking-[3px] transition-opacity hover:opacity-90 z-10"
-    style={{
-      background: BRAND.teal,
-      color: '#080810',
-      borderRadius: '4px',
-      boxShadow: `0 4px 20px ${BRAND.teal}60`,
-    }}
-  >
-    TAP TO CONNECT
-  </button>
-)}
+
+        {status === 'success' && (
+          <p className="font-display font-black text-lg tracking-widest" style={{ color: BRAND.green }}>
+            YOU'RE IN!
+          </p>
+        )}
+      </div>
+
+      {/* CTA button (only when idle) */}
+      {status === 'idle' && (
+        <button
+          onClick={handleTap}
+          className="w-full h-14 font-display font-black text-sm tracking-[3px] transition-opacity hover:opacity-90 z-10"
+          style={{
+            background: BRAND.teal,
+            color: '#080810',
+            borderRadius: '4px',
+            boxShadow: `0 4px 20px ${BRAND.teal}60`,
+          }}
+        >
+          TAP TO CONNECT
+        </button>
       )}
+
       {status !== 'idle' && <div className="w-full h-14 z-10" />}
 
       {/* Legal */}
