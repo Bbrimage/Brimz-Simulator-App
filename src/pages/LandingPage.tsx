@@ -103,7 +103,7 @@ export default function LandingPage() {
               <div className="lp-cs-header">
                 <div className="lp-cs-logo-row">
                   <div className="lp-cs-logo-mark">
-                    <img src="/images/brimz-logo-02-white.jpg" alt="Brimz" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                    <img src="/images/brimz-logo-02-white.jpg" alt="Brimz"/> style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                   </div>
                   <span className="lp-cs-logo-text">BRIMZ</span>
                 </div>
