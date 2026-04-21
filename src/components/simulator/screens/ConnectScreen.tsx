@@ -31,8 +31,12 @@ export default function ConnectScreen() {
 
       {/* Header */}
       <div className="flex flex-col items-center gap-2 z-10 animate-fade-in">
-      <div className="flex items-center gap-3">
-  <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: '#1CF4EA' }}>
+        <div className="flex items-center gap-3">
+        {/* Teal square with B */}
+    <div
+      className="w-9 h-9 rounded-lg flex items-center justify-center"
+      style={{ background: '#1CF4EA' }}
+    >
    <div
       style={{
         fontFamily: 'Barlow Condensed, sans-serif',
