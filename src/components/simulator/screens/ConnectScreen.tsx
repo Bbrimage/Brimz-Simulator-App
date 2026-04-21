@@ -30,27 +30,15 @@ export default function ConnectScreen() {
            style={{ background: `radial-gradient(circle, ${BRAND.tealDim} 0%, transparent 70%)`, filter: 'blur(40px)' }} />
 
       {/* Header */}
-      <div className="flex flex-col items-center gap-2 z-10 animate-fade-in">
-        <div className="flex items-center gap-3">
-        {/* Teal square with B */}
-    <div
-      className="w-9 h-9 rounded-lg flex items-center justify-center"
-      style={{ background: '#1CF4EA' }}
-    >
-   <div
-      style={{
-        fontFamily: 'Barlow Condensed, sans-serif',
-        fontWeight: 900,
-        fontSize: '20px',
-        color: '#080810',
-        lineHeight: 1,
-      }}
-    >
+   <div className="flex flex-col items-center gap-2 z-10 animate-fade-in">
+     <div className="flex items-center gap-3">
+    <div className="w-9 h-9 rounded-lg flex items-center justify-center font-black text-xl"
+        style={{ background: BRAND.teal, color: '#008010' }}
       B
+     </div>
+     <span className="font-display text-3xl font-black tracking-[0.25em] text-white">BRIMZ</span>
   </div>
-  <span className="font-display text-3xl font-black tracking-[0.25em] text-white">BRIMZ</span>
-        </div>
-        <span className="font-mono text-[10px] font-bold tracking-[3px]" style={{ color: '#4B5563' }}>
+    <span className="font-mono text-[10px] font-bold tracking-[3px]" style={{ color: '#4B5563' }}>
           ARENA FAN EXPERIENCE
         </span>
       </div>
