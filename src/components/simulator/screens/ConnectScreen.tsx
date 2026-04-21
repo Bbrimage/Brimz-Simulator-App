@@ -97,16 +97,28 @@ export default function ConnectScreen() {
         {status === 'connecting' && (
           <p className="font-display font-black text-lg tracking-widest text-white">CONNECTING TO THE GAME</p>
         )}
-        {status === 'success' && (
-          <p className="font-display font-black text-lg tracking-widest" style={{ color: BRAND.green }}>
-            YOU'RE IN!
-     
-          onClick={handleTap}
-          className="w-full h-14 font-display font-black text-sm tracking-[3px] transition-opacity hover:opacity-90 z-10"
-          style={{ background: BRAND.teal, color: '#080810', borderRadius: '4px', boxShadow: `0 4px 20px ${BRAND.teal}60` }}
-        >
-          TAP TO CONNECT
-        </button>
+       {status === 'success' && (
+  <p
+    className="font-display font-black text-lg tracking-widest"
+    style={{ color: BRAND.green }}
+  >
+    YOU'RE IN!
+  </p>
+)}
+{status === 'idle' && (
+  <button
+    onClick={handleTap}
+    className="w-full h-14 font-display font-black text-sm tracking-[3px] transition-opacity hover:opacity-90 z-10"
+    style={{
+      background: BRAND.teal,
+      color: '#080810',
+      borderRadius: '4px',
+      boxShadow: `0 4px 20px ${BRAND.teal}60`,
+    }}
+  >
+    TAP TO CONNECT
+  </button>
+)}
       )}
       {status !== 'idle' && <div className="w-full h-14 z-10" />}
 
