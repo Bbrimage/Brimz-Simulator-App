@@ -32,7 +32,7 @@ export default function ConnectScreen() {
       {/* Header */}
       <div className="flex flex-col items-center gap-2 z-10 animate-fade-in">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-white">
+          <div className="w-9 h-9 rounded-lg flex items-center justify-center">
             <img src="/images/brimz-logo-07.jpg" alt="Brimz Logo" className="w-6 h-6 object-contain" />
           </div>
           <span className="font-display text-3xl font-black tracking-[0.25em] text-white">BRIMZ</span>
