@@ -15,7 +15,7 @@ const DEMO_HISTORY = [
 
 export default function StatsScreen() {
   const { state } = useSim();
-  const { energyScore, tokensEarned } = state;
+  
 
   return (
     <div className="phone-scroll h-full" style={{ background: COLORS.bg }}>
