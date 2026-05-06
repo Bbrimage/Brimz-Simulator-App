@@ -103,7 +103,7 @@ export default function LandingPage() {
               <div className="lp-cs-header" style={{ position: 'relative', zIndex: 50 }}>
                 <div className="lp-cs-logo-row">
                   <img
-                    src="/logo/BRIMZ-B.png"
+                    src="/images/Full_Brimz_Logo.png"
                     alt="Brimz Icon"
                     className="lp-cs-logo-mark"
                     style={{ width: '200px', height: '50px', objectFit: 'cover' }}
