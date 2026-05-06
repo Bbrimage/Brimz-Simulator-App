@@ -33,7 +33,7 @@ export default function ConnectScreen() {
       <div className="flex flex-col items-center gap-2 z-10 animate-fade-in">
         <div className="flex items-center gap-3">
        <img
-                    src="/images/Full_Brimz_Logo.png"
+                    src="/logo/main-logo.png"
                     alt="Brimz Icon"
                     className="lp-cs-logo-mark"
                     style={{ width: '200px', height: '50px', objectFit: 'cover' }}
