@@ -1,6 +1,16 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
+import React, { createContext, useContext, useState } from 'react';
 import type { SuperAdmin } from '../types';
+
+// ── Demo credentials ──────────────────────────────────────────────────────
+const DEMO_EMAIL    = 'super@demo.com';
+const DEMO_PASSWORD = 'demo123';
+
+const DEMO_SUPER_ADMIN: SuperAdmin = {
+  id: 'demo-super-1',
+  auth_user_id: 'demo-auth-super-1',
+  full_name: 'Demo Super Admin',
+  created_at: new Date().toISOString(),
+};
 
 interface SuperAdminAuthCtx {
   superAdmin: SuperAdmin | null;
@@ -13,52 +23,17 @@ const SuperAdminAuthContext = createContext<SuperAdminAuthCtx | null>(null);
 
 export function SuperAdminAuthProvider({ children }: { children: React.ReactNode }) {
   const [superAdmin, setSuperAdmin] = useState<SuperAdmin | null>(null);
-  const [loading, setLoading]       = useState(true);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) loadSuperAdminProfile(session.user.id);
-      else setLoading(false);
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) loadSuperAdminProfile(session.user.id);
-      else { setSuperAdmin(null); setLoading(false); }
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  async function loadSuperAdminProfile(authUserId: string) {
-    const { data } = await supabase
-      .from('super_admins')
-      .select('*')
-      .eq('auth_user_id', authUserId)
-      .single();
-    setSuperAdmin(data ?? null);
-    setLoading(false);
-  }
+  const [loading]                   = useState(false);
 
   async function signIn(email: string, password: string): Promise<string | null> {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) return error.message;
-    if (!data.user) return 'Sign in failed.';
-
-    const { data: sa } = await supabase
-      .from('super_admins')
-      .select('id')
-      .eq('auth_user_id', data.user.id)
-      .single();
-
-    if (!sa) {
-      await supabase.auth.signOut();
-      return 'Access denied. Super admin account not found.';
+    if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
+      setSuperAdmin(DEMO_SUPER_ADMIN);
+      return null;
     }
-    return null;
+    return 'Invalid credentials. Use super@demo.com / demo123';
   }
 
   async function signOut() {
-    await supabase.auth.signOut();
     setSuperAdmin(null);
   }
 

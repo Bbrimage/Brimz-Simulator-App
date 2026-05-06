@@ -33,7 +33,7 @@ export default function AdminLogin() {
         <div className="flex flex-col items-center gap-2 mb-10">
           <div className="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden"
                style={{ background: BRAND.teal }}>
-            <img src="/images/Icon_Brimz_Logo.png" alt="Brimz" className="w-full h-full object-contain" />
+            <img src="/logo/BRIMZ-ab.png" alt="Brimz" className="w-full h-full object-contain" />
           </div>
           <div className="font-display font-black text-2xl tracking-[0.3em] text-white">BRIMZ</div>
           <div className="font-mono text-[10px] tracking-[3px]" style={{ color: COLORS.muted }}>ADMIN PORTAL</div>

@@ -1,6 +1,33 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
+import React, { createContext, useContext, useState } from 'react';
 import type { AdminUser } from '../types';
+
+// ── Demo credentials ──────────────────────────────────────────────────────
+const DEMO_EMAIL    = 'admin@demo.com';
+const DEMO_PASSWORD = 'demo123';
+
+const DEMO_ADMIN: AdminUser = {
+  id: 'demo-admin-1',
+  auth_user_id: 'demo-auth-1',
+  venue_id: 'demo-venue-1',
+  role: 'venue_admin',
+  status: 'approved',
+  full_name: 'Demo Admin',
+  created_at: new Date().toISOString(),
+  venue: {
+    id: 'demo-venue-1',
+    name: 'Demo Arena',
+    slug: 'demo-arena',
+    team_name: 'Demo Team',
+    primary_color: '#6366f1',
+    secondary_color: '#818cf8',
+    logo_url: null,
+    contract_status: 'active',
+    api_access_enabled: true,
+    ai_mode_enabled: true,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+};
 
 interface AdminAuthCtx {
   adminUser: AdminUser | null;
@@ -14,68 +41,21 @@ const AdminAuthContext = createContext<AdminAuthCtx | null>(null);
 
 export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
   const [adminUser, setAdminUser] = useState<AdminUser | null>(null);
-  const [loading, setLoading]     = useState(true);
-
-  useEffect(() => {
-    // Check existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) loadAdminProfile(session.user.id);
-      else setLoading(false);
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) loadAdminProfile(session.user.id);
-      else { setAdminUser(null); setLoading(false); }
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  async function loadAdminProfile(authUserId: string) {
-    const { data } = await supabase
-      .from('admin_users')
-      .select('*, venue:venues(*)')
-      .eq('auth_user_id', authUserId)
-      .single();
-    setAdminUser(data ?? null);
-    setLoading(false);
-  }
+  const [loading]                 = useState(false);
 
   async function signIn(email: string, password: string): Promise<string | null> {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) return error.message;
-    if (!data.user) return 'Sign in failed.';
-
-    // Verify this user is actually an admin
-    const { data: admin } = await supabase
-      .from('admin_users')
-      .select('id')
-      .eq('auth_user_id', data.user.id)
-      .single();
-
-    if (!admin) {
-      await supabase.auth.signOut();
-      return 'Access denied. No admin account found.';
+    if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
+      setAdminUser(DEMO_ADMIN);
+      return null;
     }
-    return null;
+    return 'Invalid credentials. Use admin@demo.com / demo123';
   }
 
-  async function signUp(fullName: string, email: string, password: string): Promise<string | null> {
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    if (error) return error.message;
-    if (!data.user) return 'Sign up failed.';
-
-    const { error: insertError } = await supabase
-      .from('admin_users')
-      .insert({ auth_user_id: data.user.id, full_name: fullName, role: 'operator', status: 'pending', venue_id: null });
-
-    if (insertError) return insertError.message;
-    await loadAdminProfile(data.user.id);
-    return null;
+  async function signUp(_fullName: string, _email: string, _password: string): Promise<string | null> {
+    return 'Sign up is disabled in demo mode. Use admin@demo.com / demo123 to sign in.';
   }
 
   async function signOut() {
-    await supabase.auth.signOut();
     setAdminUser(null);
   }
 

@@ -32,16 +32,16 @@ export default function ConnectScreen() {
       {/* Header */}
       <div className="flex flex-col items-center gap-2 z-10 animate-fade-in">
         <div className="flex items-center gap-3">
-          <div
-            className="w-9 h-9 rounded-lg flex items-center justify-center font-black text-xl"
-            style={{ background: BRAND.teal, color: '#080810' }}
-          >
-            B
-          </div>
-          <span className="font-display text-3xl font-black tracking-[0.25em] text-white">BRIMZ</span>
+       <img
+                    src="/logo/BRIMZ-B.png"
+                    alt="Brimz Icon"
+                    className="lp-cs-logo-mark"
+                    style={{ width: '200px', height: '50px', objectFit: 'cover' }}
+                  />
+         
         </div>
 
-        <span className="font-mono text-[10px] font-bold tracking-[3px]" style={{ color: '#4B5563' }}>
+        <span className="font-mono text-[10px] font-bold tracking-[3px]" style={{ color: '#ececec' }}>
           ARENA FAN EXPERIENCE
         </span>
       </div>
@@ -72,11 +72,17 @@ export default function ConnectScreen() {
         >
           {isActive ? (
             <Spinner />
-          ) : (
+          ) : status === 'success' ? (
             <span className="font-display font-black text-[52px] leading-none"
-                  style={{ color: '#080810' }}>
-              {status === 'success' ? '✓' : 'B'}
-            </span>
+                  style={{ color: '#080810' }}>✓</span>
+          ) : (
+           < div className='w-[70px] h-[70px] bg-[#54faf6] flex justify-center items-center rounded-full '>
+            <img
+              src="/logo/BRIMZ-ab.png"
+              alt="Brimz"
+              style={{ width: '60px', height: '60px', objectFit: 'contain' }}
+            />
+            </div>
           )}
         </button>
       </div>

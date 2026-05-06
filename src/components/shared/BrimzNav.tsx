@@ -13,7 +13,9 @@ export default function BrimzNav({ showMarketingLinks = false }: BrimzNavProps) 
   return (
     <>
       <nav className="bz-nav">
-        <Link to="/" className="bz-nav-logo">BRIMZ<span>.</span></Link>
+        <Link to="/" className="bz-nav-logo">
+          <img src="/images/Full_Brimz_Logo.png" alt="Brimz" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+        </Link>
 
         <div className="bz-nav-links">
           {showMarketingLinks && (

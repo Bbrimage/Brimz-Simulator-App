@@ -39,7 +39,11 @@ export default function BottomNav() {
                      color:      isActive ? COLORS.bg  : COLORS.muted,
                      boxShadow:  isActive ? `0 0 16px ${BRAND.teal}60` : 'none',
                    }}>
-                B
+                    <img
+              src="/logo/BRIMZ-ab.png"
+              alt="Brimz"
+              style={{ width: '30px', height: '30px', objectFit: 'contain' }}
+            />
               </div>
             </button>
           );

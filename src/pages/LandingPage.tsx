@@ -100,12 +100,14 @@ export default function LandingPage() {
               </div>
 
               {/* logo + tagline */}
-              <div className="lp-cs-header">
+              <div className="lp-cs-header" style={{ position: 'relative', zIndex: 50 }}>
                 <div className="lp-cs-logo-row">
-                  <div className="lp-cs-logo-mark">
-                  <div className="lp-cs-logo-mark-b">B</div>
-                  </div>
-                  <span className="lp-cs-logo-text">BRIMZ</span>
+                  <img
+                    src="/logo/BRIMZ-B.png"
+                    alt="Brimz Icon"
+                    className="lp-cs-logo-mark"
+                    style={{ width: '200px', height: '50px', objectFit: 'cover' }}
+                  />
                 </div>
                 <span className="lp-cs-tagline">ARENA FAN EXPERIENCE</span>
               </div>
@@ -116,9 +118,15 @@ export default function LandingPage() {
                   <div className="lp-cs-ring" />
                   <div className="lp-cs-ring" />
                   <div className="lp-cs-ring" />
-                  <div className="lp-cs-circle">
-                    <div className="lp-cs-circle-b">B</div>
+                  <div className='w-[70px] h-[70px] bg-[#54faf6] flex justify-center items-center rounded-full '>
+  <img
+                    src="/logo/BRIMZ-ab.png"
+                    alt="Brimz Icon"
+                    className="lp-cs-logo-mark rounded-full"
+                    style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                  />
                   </div>
+                 
                 </div>
                 <div className="lp-cs-status">
                   <div className="lp-cs-status-main">TAP TO SIMULATE<br />THE EXPERIENCE</div>
@@ -386,7 +394,9 @@ export default function LandingPage() {
 
       {/* FOOTER */}
       <footer className="lp-footer">
-        <div className="lp-footer-logo">BRIMZ<span>.</span></div>
+        <div className="lp-footer-logo">
+          <img src="/images/Full_Brimz_Logo.png" alt="Brimz" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+        </div>
         <div className="lp-footer-links">
           <a href="/privacy.html">Privacy</a>
           <a href="/terms.html">Terms</a>
@@ -394,7 +404,7 @@ export default function LandingPage() {
           <a href="mailto:hello@brimz.tech">Contact</a>
           <Link to="/simulator">Simulator</Link>
         </div>
-        <div className="lp-footer-copy">© 2025 BRIMZ</div>
+        <div className="lp-footer-copy">© 2026 BRIMZ</div>
       </footer>
 
     </div>

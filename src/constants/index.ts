@@ -1,5 +1,6 @@
 export const BRAND = {
-  teal:     '#1CF4EA',
+  // teal:     '#1CF4EA',
+  teal:     '#54faf6',
   tealDim:  '#1CF4EA22',
   tealGlow: '#1CF4EA40',
   tealMid:  '#1CF4EA80',

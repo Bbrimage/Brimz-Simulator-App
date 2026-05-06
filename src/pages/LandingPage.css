@@ -172,7 +172,8 @@
   background: #080810;
   border-radius: 44px;
   border: 3px solid rgba(0,0,0,0.9);
-  box-shadow: 14px 14px 0 rgba(0,0,0,0.25);
+
+
   overflow: hidden;
   display: flex; flex-direction: column;
   position: relative;
@@ -209,8 +210,6 @@
 }
 .lp-cs-logo-row { display: flex; align-items: center; gap: 10px; }
 .lp-cs-logo-mark {
-  width: 32px; height: 32px; border-radius: 7px;
-  background: #1CF4EA;
   display: flex; align-items: center; justify-content: center;
 }
 .lp-cs-logo-mark-b {
@@ -223,7 +222,7 @@
 }
 .lp-cs-tagline {
   font-family: 'DM Mono', monospace;
-  font-size: 9px; letter-spacing: 3px; color: #4B5563;
+  font-size: 9px; letter-spacing: 3px; color: #edeeef;
 }
 .lp-cs-tapzone {
   flex: 1; display: flex; flex-direction: column;
