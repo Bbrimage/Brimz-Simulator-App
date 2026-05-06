@@ -395,7 +395,7 @@ export default function LandingPage() {
       {/* FOOTER */}
       <footer className="lp-footer">
         <div className="lp-footer-logo">
-          <img src="/images/Full_Brimz_Logo.png" alt="Brimz" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+          <img src="/logo/main-logo.png" alt="Brimz" style={{ height: '100px', width: '140px', objectFit: 'cover' }} />
         </div>
         <div className="lp-footer-links">
           <a href="/privacy.html">Privacy</a>
